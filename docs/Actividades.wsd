@@ -1,0 +1,15 @@
+@startuml ActividadesDiagram
+start
+:Cliente realiza POST a /topics/{name}/messages;
+:API REST valida JWT;
+:Verifica si el nodo gestiona el tópico;
+if (Tópico está en este nodo?) then (sí)
+  :Guardar mensaje localmente;
+else (no)
+  :Redirigir vía gRPC al nodo líder;
+endif
+:Mensaje replicado a réplicas vía gRPC;
+:Confirmar almacenamiento y replicación;
+:Enviar 200 OK al cliente;
+stop
+@enduml

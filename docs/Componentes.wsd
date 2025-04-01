@@ -1,0 +1,50 @@
+@startuml ComponentDiagram
+skinparam componentStyle rectangle
+skinparam shadowing false
+left to right direction
+
+actor Cliente
+
+package "Clúster Middleware MOM" {
+    component "Nodo MOM A" as NodeA {
+        [API REST Server]
+        [Gestor de Recursos]
+        [Broker de Mensajes]
+        [gRPC Peer Manager]
+        [Replicador]
+        [Persistencia Local]
+    }
+
+    component "Nodo MOM B" as NodeB {
+        [API REST Server]
+        [Gestor de Recursos]
+        [Broker de Mensajes]
+        [gRPC Peer Manager]
+        [Replicador]
+        [Persistencia Local]
+    }
+
+    component "Nodo MOM C" as NodeC {
+        [API REST Server]
+        [Gestor de Recursos]
+        [Broker de Mensajes]
+        [gRPC Peer Manager]
+        [Replicador]
+        [Persistencia Local]
+    }
+}
+
+Cliente --> [API REST Server] : REST (POST/GET)
+[API REST Server] --> [Gestor de Recursos]
+[Gestor de Recursos] --> [Broker de Mensajes]
+[Broker de Mensajes] --> [Persistencia Local]
+[Broker de Mensajes] --> [Replicador]
+[Replicador] --> [gRPC Peer Manager]
+
+[Gestor de Recursos] --> [gRPC Peer Manager]
+
+NodeA ..> NodeB : gRPC Sync
+NodeA ..> NodeC : gRPC Sync
+NodeB ..> NodeC : gRPC Sync
+
+@enduml

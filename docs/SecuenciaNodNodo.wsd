@@ -1,0 +1,20 @@
+@startuml SecuanciaNodoNodoDiagram
+participant "Nodo MOM A" as MOM_A
+participant "Replicador" as RP
+participant "Nodo MOM B" as MOM_B
+participant "Nodo MOM C" as MOM_C
+participant "Broker de Mensajes" as BM_B
+participant "Broker de Mensajes" as BM_C
+
+MOM_A -> RP: replicar mensaje a nodos secundarios
+
+RP -> MOM_B: gRPC SyncMessage()
+MOM_B -> BM_B: guardar copia del mensaje
+BM_B -> MOM_B: ACK
+
+RP -> MOM_C: gRPC SyncMessage()
+MOM_C -> BM_C: guardar copia del mensaje
+BM_C -> MOM_C: ACK
+
+RP -> MOM_A: confirmación de replicación exitosa
+@enduml
