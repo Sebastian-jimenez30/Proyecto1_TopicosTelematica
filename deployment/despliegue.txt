@@ -1,0 +1,158 @@
+¡Excelente! Vamos a diseñar un **plan de despliegue robusto en AWS** para tu sistema MOM, cumpliendo con lo que exige el enunciado:
+
+> - **Múltiples nodos (cluster de MOMs)**
+> - **Interacción mediante REST/gRPC**
+> - **Escalabilidad**
+> - **Persistencia sin base de datos externa**
+> - **Seguridad y autenticación**
+
+---
+
+## ☁️ **Objetivo del despliegue**
+
+> Desplegar un sistema MOM distribuido, compuesto por una **API REST en Go** y un **clúster de nodos MOM en C++**, con comunicación interna entre nodos y externa con clientes, usando **AWS**.
+
+---
+
+## 🧱 **Componentes del sistema**
+
+| Componente               | Función                                                                 |
+|--------------------------|------------------------------------------------------------------------|
+| API REST (Go)            | Exponer endpoints públicos para usuarios (autenticación, colas, etc.)  |
+| MOM Node (C++)           | Gestionar colas/tópicos y mensajes. Pueden ser varios (clúster).       |
+| Balanceador de carga     | Repartir tráfico entrante entre las APIs Go.                           |
+| Red privada (VPC/Subnet) | Aislar la comunicación interna entre MOMs (gRPC/sockets).              |
+| Autenticación (JWT)      | Emitida desde Go y verificada en cada request.                         |
+| Almacenamiento            | Cada nodo MOM guarda mensajes en disco (EBS, instancias con SSD, etc.) |
+
+---
+
+## ☁️ **Servicios de AWS involucrados**
+
+| Servicio        | Uso                                                                 |
+|------------------|----------------------------------------------------------------------|
+| **EC2**          | Para desplegar instancias de API Go y nodos MOM en C++              |
+| **ALB (Load Balancer)** | Balanceo de carga hacia las APIs REST Go                    |
+| **Auto Scaling Group** | (opcional) Para escalar la API Go si hay mucho tráfico        |
+| **Security Groups** | Control de acceso entre nodos y hacia Internet                   |
+| **EFS o EBS**    | Persistencia de mensajes por nodo (local o compartido)              |
+| **CloudWatch**   | Logs, métricas de uso y monitoreo                                   |
+| **VPC/Subnet**   | Segmentación de red pública/privada                                 |
+| **IAM**          | Permisos para instancias (si usan EFS, etc.)                        |
+
+---
+
+## 🗺️ **Arquitectura del despliegue**
+
+```
+                    +-----------------------------+
+                    |     Usuarios / Clientes     |
+                    +--------------+--------------+
+                                   |
+                          +--------v--------+
+                          |  Load Balancer  |
+                          +--------+--------+
+                                   |
+          +------------------------+------------------------+
+          |                        |                        |
+  +-------v-------+        +-------v-------+        +-------v-------+
+  |   Go API #1   |        |   Go API #2   |  ...   |   Go API #N   |
+  +-------+-------+        +-------+-------+        +-------+-------+
+          |                        |                        |
+          | gRPC / TCP             | gRPC / TCP             |
+          |                        |                        |
+  +-------v--------+       +-------v--------+       +-------v--------+
+  |   MOM Node #1  |       |   MOM Node #2  |  ...  |   MOM Node #M   |
+  +----------------+       +----------------+       +----------------+
+         |                          |                         |
+         |<----- Comunicación entre MOMs (gRPC, sockets) ---->|
+```
+
+---
+
+## 🧪 **Máquinas necesarias (EC2)**
+
+### 1. **Instancias API Go**
+- **Tipo**: `t3.small` o `t3.medium`
+- **Cantidad**: 2-3 para alta disponibilidad
+- **SO**: Amazon Linux 2 / Ubuntu
+- **Rol**: Servir como interfaz REST pública y proxy hacia el MOM
+
+### 2. **Instancias MOM C++ (nodos)**
+- **Tipo**: `t3.medium` o `m5.large` (dependiendo del volumen)
+- **Cantidad**: al menos 3 para formar un clúster distribuido
+- **Almacenamiento**:
+  - Si los mensajes deben persistir: usar **volúmenes EBS (SSD)** o incluso **EFS** si se quiere compartir entre nodos.
+- **Red**: todas dentro de **subred privada** con comunicación entre ellas habilitada.
+
+---
+
+## 🔐 **Seguridad (Security Groups)**
+
+### API Go:
+- Permitir:
+  - HTTP/HTTPS desde Internet
+  - gRPC/tcp hacia nodos MOM (puertos internos)
+
+### MOM Nodes:
+- Solo aceptar tráfico:
+  - Desde las APIs Go (gRPC/sockets)
+  - Desde otros nodos MOM (para replicación)
+
+---
+
+## 💽 **Persistencia**
+
+Cada nodo MOM puede guardar:
+- Archivos log como `cola_nombre.log`
+- Archivos binarios estructurados (`messages.dat`)
+- Almacenados en el disco local (EBS)
+- Backup (opcional) a S3 por cronjob
+
+---
+
+## 🔐 **Autenticación**
+
+- Usuarios se autentican vía `/auth/login` en Go → reciben JWT.
+- JWT es verificado por Go antes de reenviar al MOM.
+- Opcional: MOM puede validar el token también si es necesario.
+
+---
+
+## 🚀 **Despliegue (pasos)**
+
+1. Crear VPC con subred pública (API Go) y privada (MOM).
+2. Lanzar instancias EC2 con sus roles respectivos.
+3. Desplegar tu app Go (API) en las instancias públicas.
+4. Desplegar binario del MOM en las instancias privadas.
+5. Configurar gRPC o sockets para que Go pueda enviar mensajes a los MOM.
+6. Configurar replicación entre nodos MOM vía sockets/gRPC.
+7. Configurar balanceador de carga para la API Go.
+8. Agregar reglas de seguridad para permitir solo el tráfico necesario.
+9. Monitorear con CloudWatch y logs.
+
+---
+
+## 📦 **Extras opcionales para robustez**
+
+- 🔄 **Auto Scaling** para las APIs Go.
+- 💥 **Health Checks** para los nodos MOM.
+- 🌍 **Route 53 + Certificados SSL** para acceso seguro.
+- 🔐 **AWS Secrets Manager** para guardar claves JWT.
+
+---
+
+## ✅ **Resumen del plan**
+
+| Componente     | Tecnología AWS | Función                                   |
+|----------------|----------------|--------------------------------------------|
+| API REST Go    | EC2 + ALB       | Interfaz pública y gateway                 |
+| MOM en C++     | EC2 en VPC      | Motor interno de colas/tópicos            |
+| Persistencia   | EBS / EFS       | Archivos de mensajes/logs                 |
+| Seguridad      | IAM, SG, JWT    | Accesos, cifrado, control de usuarios     |
+| Replicación    | gRPC/sockets    | Comunicación entre nodos MOM              |
+| Supervisión    | CloudWatch      | Logs, alertas, estado del sistema         |
+
+---
+
+¿Quieres que te prepare una guía paso a paso con comandos `awscli` o Terraform para automatizar el despliegue? ¿O un diagrama visual en PDF o imagen para documentarlo?
