@@ -1,0 +1,4 @@
+/home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/build/CMakeFiles/proto_files_target.dir
+/home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/build/CMakeFiles/grpc_server.dir
+/home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/build/CMakeFiles/edit_cache.dir
+/home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/build/CMakeFiles/rebuild_cache.dir
