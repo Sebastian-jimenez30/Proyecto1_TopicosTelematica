@@ -47,6 +47,10 @@ bool Broker::autenticarYObtenerUsuario(const std::string& token, Usuario& usuari
     return true;
 }
 
+bool Broker::guardarTokenReplica(const std::string& username, const std::string& token, const std::string& expiracion) {
+    return persistencia.guardarToken(username, token, expiracion);
+}
+
 // ======================= COLAS =======================
 
 bool Broker::crearCola(const std::string& nombre, const std::string& token) {

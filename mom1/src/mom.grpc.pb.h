@@ -49,6 +49,13 @@ class MomService final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mom::Token>> PrepareAsyncAutenticarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mom::Token>>(PrepareAsyncAutenticarUsuarioRaw(context, request, cq));
     }
+    virtual ::grpc::Status GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::mom::RespuestaSimple* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>> AsyncGuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>>(AsyncGuardarTokenReplicaRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>> PrepareAsyncGuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>>(PrepareAsyncGuardarTokenReplicaRaw(context, request, cq));
+    }
     virtual ::grpc::Status CrearCola(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::mom::RespuestaSimple* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>> AsyncCrearCola(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>>(AsyncCrearColaRaw(context, request, cq));
@@ -140,6 +147,8 @@ class MomService final {
       virtual void RegistrarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales* request, ::mom::RespuestaSimple* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void AutenticarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales* request, ::mom::Token* response, std::function<void(::grpc::Status)>) = 0;
       virtual void AutenticarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales* request, ::mom::Token* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void CrearCola(::grpc::ClientContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response, std::function<void(::grpc::Status)>) = 0;
       virtual void CrearCola(::grpc::ClientContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void EliminarCola(::grpc::ClientContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response, std::function<void(::grpc::Status)>) = 0;
@@ -173,6 +182,8 @@ class MomService final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>* PrepareAsyncRegistrarUsuarioRaw(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::mom::Token>* AsyncAutenticarUsuarioRaw(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::mom::Token>* PrepareAsyncAutenticarUsuarioRaw(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>* AsyncGuardarTokenReplicaRaw(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>* PrepareAsyncGuardarTokenReplicaRaw(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>* AsyncCrearColaRaw(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>* PrepareAsyncCrearColaRaw(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::mom::RespuestaSimple>* AsyncEliminarColaRaw(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::grpc::CompletionQueue* cq) = 0;
@@ -214,6 +225,13 @@ class MomService final {
     }
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mom::Token>> PrepareAsyncAutenticarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mom::Token>>(PrepareAsyncAutenticarUsuarioRaw(context, request, cq));
+    }
+    ::grpc::Status GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::mom::RespuestaSimple* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>> AsyncGuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>>(AsyncGuardarTokenReplicaRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>> PrepareAsyncGuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>>(PrepareAsyncGuardarTokenReplicaRaw(context, request, cq));
     }
     ::grpc::Status CrearCola(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::mom::RespuestaSimple* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>> AsyncCrearCola(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::grpc::CompletionQueue* cq) {
@@ -306,6 +324,8 @@ class MomService final {
       void RegistrarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales* request, ::mom::RespuestaSimple* response, ::grpc::ClientUnaryReactor* reactor) override;
       void AutenticarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales* request, ::mom::Token* response, std::function<void(::grpc::Status)>) override;
       void AutenticarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales* request, ::mom::Token* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response, std::function<void(::grpc::Status)>) override;
+      void GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response, ::grpc::ClientUnaryReactor* reactor) override;
       void CrearCola(::grpc::ClientContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response, std::function<void(::grpc::Status)>) override;
       void CrearCola(::grpc::ClientContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response, ::grpc::ClientUnaryReactor* reactor) override;
       void EliminarCola(::grpc::ClientContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response, std::function<void(::grpc::Status)>) override;
@@ -345,6 +365,8 @@ class MomService final {
     ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>* PrepareAsyncRegistrarUsuarioRaw(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::mom::Token>* AsyncAutenticarUsuarioRaw(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::mom::Token>* PrepareAsyncAutenticarUsuarioRaw(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>* AsyncGuardarTokenReplicaRaw(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>* PrepareAsyncGuardarTokenReplicaRaw(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>* AsyncCrearColaRaw(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>* PrepareAsyncCrearColaRaw(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>* AsyncEliminarColaRaw(::grpc::ClientContext* context, const ::mom::AccionConToken& request, ::grpc::CompletionQueue* cq) override;
@@ -371,6 +393,7 @@ class MomService final {
     ::grpc::ClientAsyncResponseReader< ::mom::ListaNombres>* PrepareAsyncListarTopicosRaw(::grpc::ClientContext* context, const ::mom::Token& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_RegistrarUsuario_;
     const ::grpc::internal::RpcMethod rpcmethod_AutenticarUsuario_;
+    const ::grpc::internal::RpcMethod rpcmethod_GuardarTokenReplica_;
     const ::grpc::internal::RpcMethod rpcmethod_CrearCola_;
     const ::grpc::internal::RpcMethod rpcmethod_EliminarCola_;
     const ::grpc::internal::RpcMethod rpcmethod_AutorizarUsuarioCola_;
@@ -392,6 +415,7 @@ class MomService final {
     virtual ~Service();
     virtual ::grpc::Status RegistrarUsuario(::grpc::ServerContext* context, const ::mom::Credenciales* request, ::mom::RespuestaSimple* response);
     virtual ::grpc::Status AutenticarUsuario(::grpc::ServerContext* context, const ::mom::Credenciales* request, ::mom::Token* response);
+    virtual ::grpc::Status GuardarTokenReplica(::grpc::ServerContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response);
     virtual ::grpc::Status CrearCola(::grpc::ServerContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response);
     virtual ::grpc::Status EliminarCola(::grpc::ServerContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response);
     virtual ::grpc::Status AutorizarUsuarioCola(::grpc::ServerContext* context, const ::mom::AutorizacionColaRequest* request, ::mom::RespuestaSimple* response);
@@ -446,12 +470,32 @@ class MomService final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_GuardarTokenReplica : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GuardarTokenReplica() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_GuardarTokenReplica() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GuardarTokenReplica(::grpc::ServerContext* /*context*/, const ::mom::TokenConExpiracion* /*request*/, ::mom::RespuestaSimple* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGuardarTokenReplica(::grpc::ServerContext* context, ::mom::TokenConExpiracion* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_CrearCola : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_CrearCola() {
-      ::grpc::Service::MarkMethodAsync(2);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_CrearCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -462,7 +506,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestCrearCola(::grpc::ServerContext* context, ::mom::AccionConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -471,7 +515,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_EliminarCola() {
-      ::grpc::Service::MarkMethodAsync(3);
+      ::grpc::Service::MarkMethodAsync(4);
     }
     ~WithAsyncMethod_EliminarCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -482,7 +526,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestEliminarCola(::grpc::ServerContext* context, ::mom::AccionConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -491,7 +535,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_AutorizarUsuarioCola() {
-      ::grpc::Service::MarkMethodAsync(4);
+      ::grpc::Service::MarkMethodAsync(5);
     }
     ~WithAsyncMethod_AutorizarUsuarioCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -502,7 +546,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestAutorizarUsuarioCola(::grpc::ServerContext* context, ::mom::AutorizacionColaRequest* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -511,7 +555,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_EnviarMensajeCola() {
-      ::grpc::Service::MarkMethodAsync(5);
+      ::grpc::Service::MarkMethodAsync(6);
     }
     ~WithAsyncMethod_EnviarMensajeCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -522,7 +566,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestEnviarMensajeCola(::grpc::ServerContext* context, ::mom::MensajeConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -531,7 +575,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_ConsumirMensajeCola() {
-      ::grpc::Service::MarkMethodAsync(6);
+      ::grpc::Service::MarkMethodAsync(7);
     }
     ~WithAsyncMethod_ConsumirMensajeCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -542,7 +586,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestConsumirMensajeCola(::grpc::ServerContext* context, ::mom::AccionConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::MensajeTexto>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -551,7 +595,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_ListarColas() {
-      ::grpc::Service::MarkMethodAsync(7);
+      ::grpc::Service::MarkMethodAsync(8);
     }
     ~WithAsyncMethod_ListarColas() override {
       BaseClassMustBeDerivedFromService(this);
@@ -562,7 +606,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestListarColas(::grpc::ServerContext* context, ::mom::Token* request, ::grpc::ServerAsyncResponseWriter< ::mom::ListaNombres>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -571,7 +615,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_CrearTopico() {
-      ::grpc::Service::MarkMethodAsync(8);
+      ::grpc::Service::MarkMethodAsync(9);
     }
     ~WithAsyncMethod_CrearTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -582,7 +626,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestCrearTopico(::grpc::ServerContext* context, ::mom::AccionConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -591,7 +635,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_EliminarTopico() {
-      ::grpc::Service::MarkMethodAsync(9);
+      ::grpc::Service::MarkMethodAsync(10);
     }
     ~WithAsyncMethod_EliminarTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -602,7 +646,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestEliminarTopico(::grpc::ServerContext* context, ::mom::AccionConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -611,7 +655,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SuscribirseTopico() {
-      ::grpc::Service::MarkMethodAsync(10);
+      ::grpc::Service::MarkMethodAsync(11);
     }
     ~WithAsyncMethod_SuscribirseTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -622,7 +666,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSuscribirseTopico(::grpc::ServerContext* context, ::mom::AccionConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -631,7 +675,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_PublicarEnTopico() {
-      ::grpc::Service::MarkMethodAsync(11);
+      ::grpc::Service::MarkMethodAsync(12);
     }
     ~WithAsyncMethod_PublicarEnTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -642,7 +686,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestPublicarEnTopico(::grpc::ServerContext* context, ::mom::MensajeConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::RespuestaSimple>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -651,7 +695,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_ConsumirDesdeTopico() {
-      ::grpc::Service::MarkMethodAsync(12);
+      ::grpc::Service::MarkMethodAsync(13);
     }
     ~WithAsyncMethod_ConsumirDesdeTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -662,7 +706,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestConsumirDesdeTopico(::grpc::ServerContext* context, ::mom::AccionConToken* request, ::grpc::ServerAsyncResponseWriter< ::mom::ListaMensajes>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -671,7 +715,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_ListarTopicos() {
-      ::grpc::Service::MarkMethodAsync(13);
+      ::grpc::Service::MarkMethodAsync(14);
     }
     ~WithAsyncMethod_ListarTopicos() override {
       BaseClassMustBeDerivedFromService(this);
@@ -682,10 +726,10 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestListarTopicos(::grpc::ServerContext* context, ::mom::Token* request, ::grpc::ServerAsyncResponseWriter< ::mom::ListaNombres>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_RegistrarUsuario<WithAsyncMethod_AutenticarUsuario<WithAsyncMethod_CrearCola<WithAsyncMethod_EliminarCola<WithAsyncMethod_AutorizarUsuarioCola<WithAsyncMethod_EnviarMensajeCola<WithAsyncMethod_ConsumirMensajeCola<WithAsyncMethod_ListarColas<WithAsyncMethod_CrearTopico<WithAsyncMethod_EliminarTopico<WithAsyncMethod_SuscribirseTopico<WithAsyncMethod_PublicarEnTopico<WithAsyncMethod_ConsumirDesdeTopico<WithAsyncMethod_ListarTopicos<Service > > > > > > > > > > > > > > AsyncService;
+  typedef WithAsyncMethod_RegistrarUsuario<WithAsyncMethod_AutenticarUsuario<WithAsyncMethod_GuardarTokenReplica<WithAsyncMethod_CrearCola<WithAsyncMethod_EliminarCola<WithAsyncMethod_AutorizarUsuarioCola<WithAsyncMethod_EnviarMensajeCola<WithAsyncMethod_ConsumirMensajeCola<WithAsyncMethod_ListarColas<WithAsyncMethod_CrearTopico<WithAsyncMethod_EliminarTopico<WithAsyncMethod_SuscribirseTopico<WithAsyncMethod_PublicarEnTopico<WithAsyncMethod_ConsumirDesdeTopico<WithAsyncMethod_ListarTopicos<Service > > > > > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_RegistrarUsuario : public BaseClass {
    private:
@@ -741,18 +785,45 @@ class MomService final {
       ::grpc::CallbackServerContext* /*context*/, const ::mom::Credenciales* /*request*/, ::mom::Token* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_GuardarTokenReplica : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GuardarTokenReplica() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::mom::TokenConExpiracion, ::mom::RespuestaSimple>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response) { return this->GuardarTokenReplica(context, request, response); }));}
+    void SetMessageAllocatorFor_GuardarTokenReplica(
+        ::grpc::MessageAllocator< ::mom::TokenConExpiracion, ::mom::RespuestaSimple>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::TokenConExpiracion, ::mom::RespuestaSimple>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GuardarTokenReplica() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GuardarTokenReplica(::grpc::ServerContext* /*context*/, const ::mom::TokenConExpiracion* /*request*/, ::mom::RespuestaSimple* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GuardarTokenReplica(
+      ::grpc::CallbackServerContext* /*context*/, const ::mom::TokenConExpiracion* /*request*/, ::mom::RespuestaSimple* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_CrearCola : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_CrearCola() {
-      ::grpc::Service::MarkMethodCallback(2,
+      ::grpc::Service::MarkMethodCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response) { return this->CrearCola(context, request, response); }));}
     void SetMessageAllocatorFor_CrearCola(
         ::grpc::MessageAllocator< ::mom::AccionConToken, ::mom::RespuestaSimple>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -773,13 +844,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_EliminarCola() {
-      ::grpc::Service::MarkMethodCallback(3,
+      ::grpc::Service::MarkMethodCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response) { return this->EliminarCola(context, request, response); }));}
     void SetMessageAllocatorFor_EliminarCola(
         ::grpc::MessageAllocator< ::mom::AccionConToken, ::mom::RespuestaSimple>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -800,13 +871,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_AutorizarUsuarioCola() {
-      ::grpc::Service::MarkMethodCallback(4,
+      ::grpc::Service::MarkMethodCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::AutorizacionColaRequest, ::mom::RespuestaSimple>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::AutorizacionColaRequest* request, ::mom::RespuestaSimple* response) { return this->AutorizarUsuarioCola(context, request, response); }));}
     void SetMessageAllocatorFor_AutorizarUsuarioCola(
         ::grpc::MessageAllocator< ::mom::AutorizacionColaRequest, ::mom::RespuestaSimple>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::AutorizacionColaRequest, ::mom::RespuestaSimple>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -827,13 +898,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_EnviarMensajeCola() {
-      ::grpc::Service::MarkMethodCallback(5,
+      ::grpc::Service::MarkMethodCallback(6,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::MensajeConToken, ::mom::RespuestaSimple>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::MensajeConToken* request, ::mom::RespuestaSimple* response) { return this->EnviarMensajeCola(context, request, response); }));}
     void SetMessageAllocatorFor_EnviarMensajeCola(
         ::grpc::MessageAllocator< ::mom::MensajeConToken, ::mom::RespuestaSimple>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(5);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::MensajeConToken, ::mom::RespuestaSimple>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -854,13 +925,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_ConsumirMensajeCola() {
-      ::grpc::Service::MarkMethodCallback(6,
+      ::grpc::Service::MarkMethodCallback(7,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::MensajeTexto>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::AccionConToken* request, ::mom::MensajeTexto* response) { return this->ConsumirMensajeCola(context, request, response); }));}
     void SetMessageAllocatorFor_ConsumirMensajeCola(
         ::grpc::MessageAllocator< ::mom::AccionConToken, ::mom::MensajeTexto>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(6);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::MensajeTexto>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -881,13 +952,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_ListarColas() {
-      ::grpc::Service::MarkMethodCallback(7,
+      ::grpc::Service::MarkMethodCallback(8,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::Token, ::mom::ListaNombres>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::Token* request, ::mom::ListaNombres* response) { return this->ListarColas(context, request, response); }));}
     void SetMessageAllocatorFor_ListarColas(
         ::grpc::MessageAllocator< ::mom::Token, ::mom::ListaNombres>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(8);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::Token, ::mom::ListaNombres>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -908,13 +979,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_CrearTopico() {
-      ::grpc::Service::MarkMethodCallback(8,
+      ::grpc::Service::MarkMethodCallback(9,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response) { return this->CrearTopico(context, request, response); }));}
     void SetMessageAllocatorFor_CrearTopico(
         ::grpc::MessageAllocator< ::mom::AccionConToken, ::mom::RespuestaSimple>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(8);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -935,13 +1006,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_EliminarTopico() {
-      ::grpc::Service::MarkMethodCallback(9,
+      ::grpc::Service::MarkMethodCallback(10,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response) { return this->EliminarTopico(context, request, response); }));}
     void SetMessageAllocatorFor_EliminarTopico(
         ::grpc::MessageAllocator< ::mom::AccionConToken, ::mom::RespuestaSimple>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -962,13 +1033,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_SuscribirseTopico() {
-      ::grpc::Service::MarkMethodCallback(10,
+      ::grpc::Service::MarkMethodCallback(11,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::AccionConToken* request, ::mom::RespuestaSimple* response) { return this->SuscribirseTopico(context, request, response); }));}
     void SetMessageAllocatorFor_SuscribirseTopico(
         ::grpc::MessageAllocator< ::mom::AccionConToken, ::mom::RespuestaSimple>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(10);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(11);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::RespuestaSimple>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -989,13 +1060,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_PublicarEnTopico() {
-      ::grpc::Service::MarkMethodCallback(11,
+      ::grpc::Service::MarkMethodCallback(12,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::MensajeConToken, ::mom::RespuestaSimple>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::MensajeConToken* request, ::mom::RespuestaSimple* response) { return this->PublicarEnTopico(context, request, response); }));}
     void SetMessageAllocatorFor_PublicarEnTopico(
         ::grpc::MessageAllocator< ::mom::MensajeConToken, ::mom::RespuestaSimple>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(11);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(12);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::MensajeConToken, ::mom::RespuestaSimple>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1016,13 +1087,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_ConsumirDesdeTopico() {
-      ::grpc::Service::MarkMethodCallback(12,
+      ::grpc::Service::MarkMethodCallback(13,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::ListaMensajes>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::AccionConToken* request, ::mom::ListaMensajes* response) { return this->ConsumirDesdeTopico(context, request, response); }));}
     void SetMessageAllocatorFor_ConsumirDesdeTopico(
         ::grpc::MessageAllocator< ::mom::AccionConToken, ::mom::ListaMensajes>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(12);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(13);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::AccionConToken, ::mom::ListaMensajes>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1043,13 +1114,13 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_ListarTopicos() {
-      ::grpc::Service::MarkMethodCallback(13,
+      ::grpc::Service::MarkMethodCallback(14,
           new ::grpc::internal::CallbackUnaryHandler< ::mom::Token, ::mom::ListaNombres>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mom::Token* request, ::mom::ListaNombres* response) { return this->ListarTopicos(context, request, response); }));}
     void SetMessageAllocatorFor_ListarTopicos(
         ::grpc::MessageAllocator< ::mom::Token, ::mom::ListaNombres>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(13);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(14);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mom::Token, ::mom::ListaNombres>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -1064,7 +1135,7 @@ class MomService final {
     virtual ::grpc::ServerUnaryReactor* ListarTopicos(
       ::grpc::CallbackServerContext* /*context*/, const ::mom::Token* /*request*/, ::mom::ListaNombres* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_RegistrarUsuario<WithCallbackMethod_AutenticarUsuario<WithCallbackMethod_CrearCola<WithCallbackMethod_EliminarCola<WithCallbackMethod_AutorizarUsuarioCola<WithCallbackMethod_EnviarMensajeCola<WithCallbackMethod_ConsumirMensajeCola<WithCallbackMethod_ListarColas<WithCallbackMethod_CrearTopico<WithCallbackMethod_EliminarTopico<WithCallbackMethod_SuscribirseTopico<WithCallbackMethod_PublicarEnTopico<WithCallbackMethod_ConsumirDesdeTopico<WithCallbackMethod_ListarTopicos<Service > > > > > > > > > > > > > > CallbackService;
+  typedef WithCallbackMethod_RegistrarUsuario<WithCallbackMethod_AutenticarUsuario<WithCallbackMethod_GuardarTokenReplica<WithCallbackMethod_CrearCola<WithCallbackMethod_EliminarCola<WithCallbackMethod_AutorizarUsuarioCola<WithCallbackMethod_EnviarMensajeCola<WithCallbackMethod_ConsumirMensajeCola<WithCallbackMethod_ListarColas<WithCallbackMethod_CrearTopico<WithCallbackMethod_EliminarTopico<WithCallbackMethod_SuscribirseTopico<WithCallbackMethod_PublicarEnTopico<WithCallbackMethod_ConsumirDesdeTopico<WithCallbackMethod_ListarTopicos<Service > > > > > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_RegistrarUsuario : public BaseClass {
@@ -1101,12 +1172,29 @@ class MomService final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_GuardarTokenReplica : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GuardarTokenReplica() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_GuardarTokenReplica() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GuardarTokenReplica(::grpc::ServerContext* /*context*/, const ::mom::TokenConExpiracion* /*request*/, ::mom::RespuestaSimple* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_CrearCola : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_CrearCola() {
-      ::grpc::Service::MarkMethodGeneric(2);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_CrearCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1123,7 +1211,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_EliminarCola() {
-      ::grpc::Service::MarkMethodGeneric(3);
+      ::grpc::Service::MarkMethodGeneric(4);
     }
     ~WithGenericMethod_EliminarCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1140,7 +1228,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_AutorizarUsuarioCola() {
-      ::grpc::Service::MarkMethodGeneric(4);
+      ::grpc::Service::MarkMethodGeneric(5);
     }
     ~WithGenericMethod_AutorizarUsuarioCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1157,7 +1245,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_EnviarMensajeCola() {
-      ::grpc::Service::MarkMethodGeneric(5);
+      ::grpc::Service::MarkMethodGeneric(6);
     }
     ~WithGenericMethod_EnviarMensajeCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1174,7 +1262,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_ConsumirMensajeCola() {
-      ::grpc::Service::MarkMethodGeneric(6);
+      ::grpc::Service::MarkMethodGeneric(7);
     }
     ~WithGenericMethod_ConsumirMensajeCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1191,7 +1279,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_ListarColas() {
-      ::grpc::Service::MarkMethodGeneric(7);
+      ::grpc::Service::MarkMethodGeneric(8);
     }
     ~WithGenericMethod_ListarColas() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1208,7 +1296,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_CrearTopico() {
-      ::grpc::Service::MarkMethodGeneric(8);
+      ::grpc::Service::MarkMethodGeneric(9);
     }
     ~WithGenericMethod_CrearTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1225,7 +1313,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_EliminarTopico() {
-      ::grpc::Service::MarkMethodGeneric(9);
+      ::grpc::Service::MarkMethodGeneric(10);
     }
     ~WithGenericMethod_EliminarTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1242,7 +1330,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SuscribirseTopico() {
-      ::grpc::Service::MarkMethodGeneric(10);
+      ::grpc::Service::MarkMethodGeneric(11);
     }
     ~WithGenericMethod_SuscribirseTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1259,7 +1347,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_PublicarEnTopico() {
-      ::grpc::Service::MarkMethodGeneric(11);
+      ::grpc::Service::MarkMethodGeneric(12);
     }
     ~WithGenericMethod_PublicarEnTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1276,7 +1364,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_ConsumirDesdeTopico() {
-      ::grpc::Service::MarkMethodGeneric(12);
+      ::grpc::Service::MarkMethodGeneric(13);
     }
     ~WithGenericMethod_ConsumirDesdeTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1293,7 +1381,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_ListarTopicos() {
-      ::grpc::Service::MarkMethodGeneric(13);
+      ::grpc::Service::MarkMethodGeneric(14);
     }
     ~WithGenericMethod_ListarTopicos() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1345,12 +1433,32 @@ class MomService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_GuardarTokenReplica : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GuardarTokenReplica() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_GuardarTokenReplica() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GuardarTokenReplica(::grpc::ServerContext* /*context*/, const ::mom::TokenConExpiracion* /*request*/, ::mom::RespuestaSimple* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGuardarTokenReplica(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_CrearCola : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_CrearCola() {
-      ::grpc::Service::MarkMethodRaw(2);
+      ::grpc::Service::MarkMethodRaw(3);
     }
     ~WithRawMethod_CrearCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1361,7 +1469,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestCrearCola(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1370,7 +1478,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_EliminarCola() {
-      ::grpc::Service::MarkMethodRaw(3);
+      ::grpc::Service::MarkMethodRaw(4);
     }
     ~WithRawMethod_EliminarCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1381,7 +1489,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestEliminarCola(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1390,7 +1498,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_AutorizarUsuarioCola() {
-      ::grpc::Service::MarkMethodRaw(4);
+      ::grpc::Service::MarkMethodRaw(5);
     }
     ~WithRawMethod_AutorizarUsuarioCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1401,7 +1509,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestAutorizarUsuarioCola(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1410,7 +1518,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_EnviarMensajeCola() {
-      ::grpc::Service::MarkMethodRaw(5);
+      ::grpc::Service::MarkMethodRaw(6);
     }
     ~WithRawMethod_EnviarMensajeCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1421,7 +1529,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestEnviarMensajeCola(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(5, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1430,7 +1538,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_ConsumirMensajeCola() {
-      ::grpc::Service::MarkMethodRaw(6);
+      ::grpc::Service::MarkMethodRaw(7);
     }
     ~WithRawMethod_ConsumirMensajeCola() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1441,7 +1549,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestConsumirMensajeCola(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1450,7 +1558,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_ListarColas() {
-      ::grpc::Service::MarkMethodRaw(7);
+      ::grpc::Service::MarkMethodRaw(8);
     }
     ~WithRawMethod_ListarColas() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1461,7 +1569,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestListarColas(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1470,7 +1578,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_CrearTopico() {
-      ::grpc::Service::MarkMethodRaw(8);
+      ::grpc::Service::MarkMethodRaw(9);
     }
     ~WithRawMethod_CrearTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1481,7 +1589,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestCrearTopico(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(8, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1490,7 +1598,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_EliminarTopico() {
-      ::grpc::Service::MarkMethodRaw(9);
+      ::grpc::Service::MarkMethodRaw(10);
     }
     ~WithRawMethod_EliminarTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1501,7 +1609,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestEliminarTopico(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1510,7 +1618,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SuscribirseTopico() {
-      ::grpc::Service::MarkMethodRaw(10);
+      ::grpc::Service::MarkMethodRaw(11);
     }
     ~WithRawMethod_SuscribirseTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1521,7 +1629,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSuscribirseTopico(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(10, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1530,7 +1638,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_PublicarEnTopico() {
-      ::grpc::Service::MarkMethodRaw(11);
+      ::grpc::Service::MarkMethodRaw(12);
     }
     ~WithRawMethod_PublicarEnTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1541,7 +1649,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestPublicarEnTopico(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(11, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1550,7 +1658,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_ConsumirDesdeTopico() {
-      ::grpc::Service::MarkMethodRaw(12);
+      ::grpc::Service::MarkMethodRaw(13);
     }
     ~WithRawMethod_ConsumirDesdeTopico() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1561,7 +1669,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestConsumirDesdeTopico(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(12, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1570,7 +1678,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_ListarTopicos() {
-      ::grpc::Service::MarkMethodRaw(13);
+      ::grpc::Service::MarkMethodRaw(14);
     }
     ~WithRawMethod_ListarTopicos() override {
       BaseClassMustBeDerivedFromService(this);
@@ -1581,7 +1689,7 @@ class MomService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestListarTopicos(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(13, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(14, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1629,12 +1737,34 @@ class MomService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_GuardarTokenReplica : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GuardarTokenReplica() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GuardarTokenReplica(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GuardarTokenReplica() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GuardarTokenReplica(::grpc::ServerContext* /*context*/, const ::mom::TokenConExpiracion* /*request*/, ::mom::RespuestaSimple* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GuardarTokenReplica(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_CrearCola : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_CrearCola() {
-      ::grpc::Service::MarkMethodRawCallback(2,
+      ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->CrearCola(context, request, response); }));
@@ -1656,7 +1786,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_EliminarCola() {
-      ::grpc::Service::MarkMethodRawCallback(3,
+      ::grpc::Service::MarkMethodRawCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->EliminarCola(context, request, response); }));
@@ -1678,7 +1808,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_AutorizarUsuarioCola() {
-      ::grpc::Service::MarkMethodRawCallback(4,
+      ::grpc::Service::MarkMethodRawCallback(5,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->AutorizarUsuarioCola(context, request, response); }));
@@ -1700,7 +1830,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_EnviarMensajeCola() {
-      ::grpc::Service::MarkMethodRawCallback(5,
+      ::grpc::Service::MarkMethodRawCallback(6,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->EnviarMensajeCola(context, request, response); }));
@@ -1722,7 +1852,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_ConsumirMensajeCola() {
-      ::grpc::Service::MarkMethodRawCallback(6,
+      ::grpc::Service::MarkMethodRawCallback(7,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ConsumirMensajeCola(context, request, response); }));
@@ -1744,7 +1874,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_ListarColas() {
-      ::grpc::Service::MarkMethodRawCallback(7,
+      ::grpc::Service::MarkMethodRawCallback(8,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ListarColas(context, request, response); }));
@@ -1766,7 +1896,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_CrearTopico() {
-      ::grpc::Service::MarkMethodRawCallback(8,
+      ::grpc::Service::MarkMethodRawCallback(9,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->CrearTopico(context, request, response); }));
@@ -1788,7 +1918,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_EliminarTopico() {
-      ::grpc::Service::MarkMethodRawCallback(9,
+      ::grpc::Service::MarkMethodRawCallback(10,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->EliminarTopico(context, request, response); }));
@@ -1810,7 +1940,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_SuscribirseTopico() {
-      ::grpc::Service::MarkMethodRawCallback(10,
+      ::grpc::Service::MarkMethodRawCallback(11,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SuscribirseTopico(context, request, response); }));
@@ -1832,7 +1962,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_PublicarEnTopico() {
-      ::grpc::Service::MarkMethodRawCallback(11,
+      ::grpc::Service::MarkMethodRawCallback(12,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->PublicarEnTopico(context, request, response); }));
@@ -1854,7 +1984,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_ConsumirDesdeTopico() {
-      ::grpc::Service::MarkMethodRawCallback(12,
+      ::grpc::Service::MarkMethodRawCallback(13,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ConsumirDesdeTopico(context, request, response); }));
@@ -1876,7 +2006,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_ListarTopicos() {
-      ::grpc::Service::MarkMethodRawCallback(13,
+      ::grpc::Service::MarkMethodRawCallback(14,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ListarTopicos(context, request, response); }));
@@ -1947,12 +2077,39 @@ class MomService final {
     virtual ::grpc::Status StreamedAutenticarUsuario(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mom::Credenciales,::mom::Token>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_GuardarTokenReplica : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GuardarTokenReplica() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mom::TokenConExpiracion, ::mom::RespuestaSimple>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::mom::TokenConExpiracion, ::mom::RespuestaSimple>* streamer) {
+                       return this->StreamedGuardarTokenReplica(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GuardarTokenReplica() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GuardarTokenReplica(::grpc::ServerContext* /*context*/, const ::mom::TokenConExpiracion* /*request*/, ::mom::RespuestaSimple* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGuardarTokenReplica(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mom::TokenConExpiracion,::mom::RespuestaSimple>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_CrearCola : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_CrearCola() {
-      ::grpc::Service::MarkMethodStreamed(2,
+      ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](::grpc::ServerContext* context,
@@ -1979,7 +2136,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_EliminarCola() {
-      ::grpc::Service::MarkMethodStreamed(3,
+      ::grpc::Service::MarkMethodStreamed(4,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](::grpc::ServerContext* context,
@@ -2006,7 +2163,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_AutorizarUsuarioCola() {
-      ::grpc::Service::MarkMethodStreamed(4,
+      ::grpc::Service::MarkMethodStreamed(5,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::AutorizacionColaRequest, ::mom::RespuestaSimple>(
             [this](::grpc::ServerContext* context,
@@ -2033,7 +2190,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_EnviarMensajeCola() {
-      ::grpc::Service::MarkMethodStreamed(5,
+      ::grpc::Service::MarkMethodStreamed(6,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::MensajeConToken, ::mom::RespuestaSimple>(
             [this](::grpc::ServerContext* context,
@@ -2060,7 +2217,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_ConsumirMensajeCola() {
-      ::grpc::Service::MarkMethodStreamed(6,
+      ::grpc::Service::MarkMethodStreamed(7,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::AccionConToken, ::mom::MensajeTexto>(
             [this](::grpc::ServerContext* context,
@@ -2087,7 +2244,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_ListarColas() {
-      ::grpc::Service::MarkMethodStreamed(7,
+      ::grpc::Service::MarkMethodStreamed(8,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::Token, ::mom::ListaNombres>(
             [this](::grpc::ServerContext* context,
@@ -2114,7 +2271,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_CrearTopico() {
-      ::grpc::Service::MarkMethodStreamed(8,
+      ::grpc::Service::MarkMethodStreamed(9,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](::grpc::ServerContext* context,
@@ -2141,7 +2298,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_EliminarTopico() {
-      ::grpc::Service::MarkMethodStreamed(9,
+      ::grpc::Service::MarkMethodStreamed(10,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](::grpc::ServerContext* context,
@@ -2168,7 +2325,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_SuscribirseTopico() {
-      ::grpc::Service::MarkMethodStreamed(10,
+      ::grpc::Service::MarkMethodStreamed(11,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::AccionConToken, ::mom::RespuestaSimple>(
             [this](::grpc::ServerContext* context,
@@ -2195,7 +2352,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_PublicarEnTopico() {
-      ::grpc::Service::MarkMethodStreamed(11,
+      ::grpc::Service::MarkMethodStreamed(12,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::MensajeConToken, ::mom::RespuestaSimple>(
             [this](::grpc::ServerContext* context,
@@ -2222,7 +2379,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_ConsumirDesdeTopico() {
-      ::grpc::Service::MarkMethodStreamed(12,
+      ::grpc::Service::MarkMethodStreamed(13,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::AccionConToken, ::mom::ListaMensajes>(
             [this](::grpc::ServerContext* context,
@@ -2249,7 +2406,7 @@ class MomService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_ListarTopicos() {
-      ::grpc::Service::MarkMethodStreamed(13,
+      ::grpc::Service::MarkMethodStreamed(14,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mom::Token, ::mom::ListaNombres>(
             [this](::grpc::ServerContext* context,
@@ -2270,9 +2427,9 @@ class MomService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedListarTopicos(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mom::Token,::mom::ListaNombres>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_RegistrarUsuario<WithStreamedUnaryMethod_AutenticarUsuario<WithStreamedUnaryMethod_CrearCola<WithStreamedUnaryMethod_EliminarCola<WithStreamedUnaryMethod_AutorizarUsuarioCola<WithStreamedUnaryMethod_EnviarMensajeCola<WithStreamedUnaryMethod_ConsumirMensajeCola<WithStreamedUnaryMethod_ListarColas<WithStreamedUnaryMethod_CrearTopico<WithStreamedUnaryMethod_EliminarTopico<WithStreamedUnaryMethod_SuscribirseTopico<WithStreamedUnaryMethod_PublicarEnTopico<WithStreamedUnaryMethod_ConsumirDesdeTopico<WithStreamedUnaryMethod_ListarTopicos<Service > > > > > > > > > > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_RegistrarUsuario<WithStreamedUnaryMethod_AutenticarUsuario<WithStreamedUnaryMethod_GuardarTokenReplica<WithStreamedUnaryMethod_CrearCola<WithStreamedUnaryMethod_EliminarCola<WithStreamedUnaryMethod_AutorizarUsuarioCola<WithStreamedUnaryMethod_EnviarMensajeCola<WithStreamedUnaryMethod_ConsumirMensajeCola<WithStreamedUnaryMethod_ListarColas<WithStreamedUnaryMethod_CrearTopico<WithStreamedUnaryMethod_EliminarTopico<WithStreamedUnaryMethod_SuscribirseTopico<WithStreamedUnaryMethod_PublicarEnTopico<WithStreamedUnaryMethod_ConsumirDesdeTopico<WithStreamedUnaryMethod_ListarTopicos<Service > > > > > > > > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_RegistrarUsuario<WithStreamedUnaryMethod_AutenticarUsuario<WithStreamedUnaryMethod_CrearCola<WithStreamedUnaryMethod_EliminarCola<WithStreamedUnaryMethod_AutorizarUsuarioCola<WithStreamedUnaryMethod_EnviarMensajeCola<WithStreamedUnaryMethod_ConsumirMensajeCola<WithStreamedUnaryMethod_ListarColas<WithStreamedUnaryMethod_CrearTopico<WithStreamedUnaryMethod_EliminarTopico<WithStreamedUnaryMethod_SuscribirseTopico<WithStreamedUnaryMethod_PublicarEnTopico<WithStreamedUnaryMethod_ConsumirDesdeTopico<WithStreamedUnaryMethod_ListarTopicos<Service > > > > > > > > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_RegistrarUsuario<WithStreamedUnaryMethod_AutenticarUsuario<WithStreamedUnaryMethod_GuardarTokenReplica<WithStreamedUnaryMethod_CrearCola<WithStreamedUnaryMethod_EliminarCola<WithStreamedUnaryMethod_AutorizarUsuarioCola<WithStreamedUnaryMethod_EnviarMensajeCola<WithStreamedUnaryMethod_ConsumirMensajeCola<WithStreamedUnaryMethod_ListarColas<WithStreamedUnaryMethod_CrearTopico<WithStreamedUnaryMethod_EliminarTopico<WithStreamedUnaryMethod_SuscribirseTopico<WithStreamedUnaryMethod_PublicarEnTopico<WithStreamedUnaryMethod_ConsumirDesdeTopico<WithStreamedUnaryMethod_ListarTopicos<Service > > > > > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace mom

@@ -1,7 +1,7 @@
 CMakeFiles/grpc_server.dir/src/cola.cpp.o: \
- /home/sebastian/projects/mom_core_v2_node1/src/cola.cpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/src/cola.cpp \
  /usr/include/stdc-predef.h \
- /home/sebastian/projects/mom_core_v2_node1/include/cola.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/include/cola.hpp \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -123,7 +123,7 @@ CMakeFiles/grpc_server.dir/src/cola.cpp.o: \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc /usr/include/c++/13/bits/stl_heap.h \
  /usr/include/c++/13/bits/stl_queue.h \
- /home/sebastian/projects/mom_core_v2_node1/include/mensaje.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/include/mensaje.hpp \
  /usr/include/c++/13/chrono /usr/include/c++/13/bits/chrono.h \
  /usr/include/c++/13/ratio /usr/include/c++/13/cstdint \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
@@ -135,11 +135,11 @@ CMakeFiles/grpc_server.dir/src/cola.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
  /usr/include/c++/13/bits/parse_numbers.h \
- /home/sebastian/projects/mom_core_v2_node1/include/persistencia.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/include/persistencia.hpp \
  /usr/include/sqlite3.h \
- /home/sebastian/projects/mom_core_v2_node1/include/usuario.hpp \
- /home/sebastian/projects/mom_core_v2_node1/external/jwt-cpp/include/jwt-cpp/jwt.h \
- /home/sebastian/projects/mom_core_v2_node1/external/jwt-cpp/include/picojson/picojson.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/include/usuario.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/external/jwt-cpp/include/jwt-cpp/jwt.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/external/jwt-cpp/include/picojson/picojson.h \
  /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
  /usr/include/c++/13/bits/algorithmfwd.h \
  /usr/include/c++/13/bits/uniform_int_dist.h \
@@ -210,7 +210,7 @@ CMakeFiles/grpc_server.dir/src/cola.cpp.o: \
  /usr/include/c++/13/tr1/poly_laguerre.tcc \
  /usr/include/c++/13/tr1/riemann_zeta.tcc /usr/include/c++/13/cinttypes \
  /usr/include/inttypes.h \
- /home/sebastian/projects/mom_core_v2_node1/external/jwt-cpp/include/jwt-cpp/base.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/external/jwt-cpp/include/jwt-cpp/base.h \
  /usr/include/c++/13/array /usr/include/c++/13/compare \
  /usr/include/openssl/ec.h /usr/include/openssl/macros.h \
  /usr/include/x86_64-linux-gnu/openssl/opensslconf.h \
@@ -283,5 +283,5 @@ CMakeFiles/grpc_server.dir/src/cola.cpp.o: \
  /usr/include/c++/13/bits/stl_multiset.h \
  /usr/include/c++/13/experimental/type_traits \
  /usr/include/c++/13/experimental/bits/lfts_config.h \
- /home/sebastian/projects/mom_core_v2_node1/external/jwt-cpp/include/jwt-cpp/traits/kazuho-picojson/defaults.h \
- /home/sebastian/projects/mom_core_v2_node1/external/jwt-cpp/include/jwt-cpp/traits/kazuho-picojson/traits.h
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/external/jwt-cpp/include/jwt-cpp/traits/kazuho-picojson/defaults.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/external/jwt-cpp/include/jwt-cpp/traits/kazuho-picojson/traits.h

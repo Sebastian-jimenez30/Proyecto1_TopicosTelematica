@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	MomService_RegistrarUsuario_FullMethodName     = "/mom.MomService/RegistrarUsuario"
 	MomService_AutenticarUsuario_FullMethodName    = "/mom.MomService/AutenticarUsuario"
+	MomService_GuardarTokenReplica_FullMethodName  = "/mom.MomService/GuardarTokenReplica"
 	MomService_CrearCola_FullMethodName            = "/mom.MomService/CrearCola"
 	MomService_EliminarCola_FullMethodName         = "/mom.MomService/EliminarCola"
 	MomService_AutorizarUsuarioCola_FullMethodName = "/mom.MomService/AutorizarUsuarioCola"
@@ -41,6 +42,7 @@ const (
 type MomServiceClient interface {
 	RegistrarUsuario(ctx context.Context, in *Credenciales, opts ...grpc.CallOption) (*RespuestaSimple, error)
 	AutenticarUsuario(ctx context.Context, in *Credenciales, opts ...grpc.CallOption) (*Token, error)
+	GuardarTokenReplica(ctx context.Context, in *TokenConExpiracion, opts ...grpc.CallOption) (*RespuestaSimple, error)
 	CrearCola(ctx context.Context, in *AccionConToken, opts ...grpc.CallOption) (*RespuestaSimple, error)
 	EliminarCola(ctx context.Context, in *AccionConToken, opts ...grpc.CallOption) (*RespuestaSimple, error)
 	AutorizarUsuarioCola(ctx context.Context, in *AutorizacionColaRequest, opts ...grpc.CallOption) (*RespuestaSimple, error)
@@ -77,6 +79,16 @@ func (c *momServiceClient) AutenticarUsuario(ctx context.Context, in *Credencial
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Token)
 	err := c.cc.Invoke(ctx, MomService_AutenticarUsuario_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *momServiceClient) GuardarTokenReplica(ctx context.Context, in *TokenConExpiracion, opts ...grpc.CallOption) (*RespuestaSimple, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RespuestaSimple)
+	err := c.cc.Invoke(ctx, MomService_GuardarTokenReplica_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -209,6 +221,7 @@ func (c *momServiceClient) ListarTopicos(ctx context.Context, in *Token, opts ..
 type MomServiceServer interface {
 	RegistrarUsuario(context.Context, *Credenciales) (*RespuestaSimple, error)
 	AutenticarUsuario(context.Context, *Credenciales) (*Token, error)
+	GuardarTokenReplica(context.Context, *TokenConExpiracion) (*RespuestaSimple, error)
 	CrearCola(context.Context, *AccionConToken) (*RespuestaSimple, error)
 	EliminarCola(context.Context, *AccionConToken) (*RespuestaSimple, error)
 	AutorizarUsuarioCola(context.Context, *AutorizacionColaRequest) (*RespuestaSimple, error)
@@ -236,6 +249,9 @@ func (UnimplementedMomServiceServer) RegistrarUsuario(context.Context, *Credenci
 }
 func (UnimplementedMomServiceServer) AutenticarUsuario(context.Context, *Credenciales) (*Token, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AutenticarUsuario not implemented")
+}
+func (UnimplementedMomServiceServer) GuardarTokenReplica(context.Context, *TokenConExpiracion) (*RespuestaSimple, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GuardarTokenReplica not implemented")
 }
 func (UnimplementedMomServiceServer) CrearCola(context.Context, *AccionConToken) (*RespuestaSimple, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CrearCola not implemented")
@@ -326,6 +342,24 @@ func _MomService_AutenticarUsuario_Handler(srv interface{}, ctx context.Context,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MomServiceServer).AutenticarUsuario(ctx, req.(*Credenciales))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MomService_GuardarTokenReplica_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TokenConExpiracion)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MomServiceServer).GuardarTokenReplica(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MomService_GuardarTokenReplica_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MomServiceServer).GuardarTokenReplica(ctx, req.(*TokenConExpiracion))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -560,6 +594,10 @@ var MomService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AutenticarUsuario",
 			Handler:    _MomService_AutenticarUsuario_Handler,
+		},
+		{
+			MethodName: "GuardarTokenReplica",
+			Handler:    _MomService_GuardarTokenReplica_Handler,
 		},
 		{
 			MethodName: "CrearCola",

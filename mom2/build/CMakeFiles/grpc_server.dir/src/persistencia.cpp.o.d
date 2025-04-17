@@ -1,7 +1,7 @@
 CMakeFiles/grpc_server.dir/src/persistencia.cpp.o: \
- /home/sebastian/projects/mom_core_v2_node2/src/persistencia.cpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/persistencia.cpp \
  /usr/include/stdc-predef.h \
- /home/sebastian/projects/mom_core_v2_node2/include/persistencia.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/include/persistencia.hpp \
  /usr/include/sqlite3.h /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
@@ -120,7 +120,7 @@ CMakeFiles/grpc_server.dir/src/persistencia.cpp.o: \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc \
- /home/sebastian/projects/mom_core_v2_node2/include/mensaje.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/include/mensaje.hpp \
  /usr/include/c++/13/chrono /usr/include/c++/13/bits/chrono.h \
  /usr/include/c++/13/ratio /usr/include/c++/13/cstdint \
  /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \

@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "/home/sebastian/projects/mom_core_v2_node2/src/mom.grpc.pb.cc"
-  "/home/sebastian/projects/mom_core_v2_node2/src/mom.grpc.pb.h"
-  "/home/sebastian/projects/mom_core_v2_node2/src/mom.pb.cc"
-  "/home/sebastian/projects/mom_core_v2_node2/src/mom.pb.h"
+  "/home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/mom.grpc.pb.cc"
+  "/home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/mom.grpc.pb.h"
+  "/home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/mom.pb.cc"
+  "/home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/mom.pb.h"
   "CMakeFiles/grpc_server.dir/src/broker.cpp.o"
   "CMakeFiles/grpc_server.dir/src/broker.cpp.o.d"
   "CMakeFiles/grpc_server.dir/src/cola.cpp.o"

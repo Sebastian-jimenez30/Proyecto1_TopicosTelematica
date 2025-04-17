@@ -5,6 +5,7 @@ package mom;
 service MomService {
   rpc RegistrarUsuario (Credenciales) returns (RespuestaSimple);
   rpc AutenticarUsuario (Credenciales) returns (Token);
+  rpc GuardarTokenReplica (TokenConExpiracion) returns (RespuestaSimple);
 
   rpc CrearCola (AccionConToken) returns (RespuestaSimple);
   rpc EliminarCola (AccionConToken) returns (RespuestaSimple);
@@ -26,6 +27,12 @@ service MomService {
 message Credenciales {
   string username = 1;
   string password = 2;
+}
+
+message TokenConExpiracion {
+  string username = 1;
+  string token = 2;
+  string expiracion = 3; // en formato %Y-%m-%d %H:%M:%S
 }
 
 message Token {

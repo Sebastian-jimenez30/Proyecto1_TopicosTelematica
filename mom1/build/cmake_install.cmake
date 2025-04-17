@@ -1,4 +1,4 @@
-# Install script for directory: /home/sebastian/projects/mom_core_v2_node1
+# Install script for directory: /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/sebastian/projects/mom_core_v2_node1/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

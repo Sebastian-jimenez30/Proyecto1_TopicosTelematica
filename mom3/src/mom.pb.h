@@ -72,6 +72,9 @@ extern RespuestaSimpleDefaultTypeInternal _RespuestaSimple_default_instance_;
 class Token;
 struct TokenDefaultTypeInternal;
 extern TokenDefaultTypeInternal _Token_default_instance_;
+class TokenConExpiracion;
+struct TokenConExpiracionDefaultTypeInternal;
+extern TokenConExpiracionDefaultTypeInternal _TokenConExpiracion_default_instance_;
 }  // namespace mom
 PROTOBUF_NAMESPACE_OPEN
 template<> ::mom::AccionConToken* Arena::CreateMaybeMessage<::mom::AccionConToken>(Arena*);
@@ -83,6 +86,7 @@ template<> ::mom::MensajeConToken* Arena::CreateMaybeMessage<::mom::MensajeConTo
 template<> ::mom::MensajeTexto* Arena::CreateMaybeMessage<::mom::MensajeTexto>(Arena*);
 template<> ::mom::RespuestaSimple* Arena::CreateMaybeMessage<::mom::RespuestaSimple>(Arena*);
 template<> ::mom::Token* Arena::CreateMaybeMessage<::mom::Token>(Arena*);
+template<> ::mom::TokenConExpiracion* Arena::CreateMaybeMessage<::mom::TokenConExpiracion>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace mom {
 
@@ -257,6 +261,191 @@ class Credenciales final :
 };
 // -------------------------------------------------------------------
 
+class TokenConExpiracion final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mom.TokenConExpiracion) */ {
+ public:
+  inline TokenConExpiracion() : TokenConExpiracion(nullptr) {}
+  ~TokenConExpiracion() override;
+  explicit PROTOBUF_CONSTEXPR TokenConExpiracion(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TokenConExpiracion(const TokenConExpiracion& from);
+  TokenConExpiracion(TokenConExpiracion&& from) noexcept
+    : TokenConExpiracion() {
+    *this = ::std::move(from);
+  }
+
+  inline TokenConExpiracion& operator=(const TokenConExpiracion& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TokenConExpiracion& operator=(TokenConExpiracion&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TokenConExpiracion& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TokenConExpiracion* internal_default_instance() {
+    return reinterpret_cast<const TokenConExpiracion*>(
+               &_TokenConExpiracion_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(TokenConExpiracion& a, TokenConExpiracion& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TokenConExpiracion* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TokenConExpiracion* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TokenConExpiracion* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TokenConExpiracion>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TokenConExpiracion& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TokenConExpiracion& from) {
+    TokenConExpiracion::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TokenConExpiracion* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mom.TokenConExpiracion";
+  }
+  protected:
+  explicit TokenConExpiracion(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUsernameFieldNumber = 1,
+    kTokenFieldNumber = 2,
+    kExpiracionFieldNumber = 3,
+  };
+  // string username = 1;
+  void clear_username();
+  const std::string& username() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_username(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_username();
+  PROTOBUF_NODISCARD std::string* release_username();
+  void set_allocated_username(std::string* username);
+  private:
+  const std::string& _internal_username() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_username(const std::string& value);
+  std::string* _internal_mutable_username();
+  public:
+
+  // string token = 2;
+  void clear_token();
+  const std::string& token() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_token(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_token();
+  PROTOBUF_NODISCARD std::string* release_token();
+  void set_allocated_token(std::string* token);
+  private:
+  const std::string& _internal_token() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_token(const std::string& value);
+  std::string* _internal_mutable_token();
+  public:
+
+  // string expiracion = 3;
+  void clear_expiracion();
+  const std::string& expiracion() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_expiracion(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_expiracion();
+  PROTOBUF_NODISCARD std::string* release_expiracion();
+  void set_allocated_expiracion(std::string* expiracion);
+  private:
+  const std::string& _internal_expiracion() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_expiracion(const std::string& value);
+  std::string* _internal_mutable_expiracion();
+  public:
+
+  // @@protoc_insertion_point(class_scope:mom.TokenConExpiracion)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr username_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr token_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr expiracion_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_mom_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Token final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mom.Token) */ {
  public:
@@ -305,7 +494,7 @@ class Token final :
                &_Token_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(Token& a, Token& b) {
     a.Swap(&b);
@@ -458,7 +647,7 @@ class AccionConToken final :
                &_AccionConToken_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(AccionConToken& a, AccionConToken& b) {
     a.Swap(&b);
@@ -627,7 +816,7 @@ class MensajeConToken final :
                &_MensajeConToken_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(MensajeConToken& a, MensajeConToken& b) {
     a.Swap(&b);
@@ -812,7 +1001,7 @@ class AutorizacionColaRequest final :
                &_AutorizacionColaRequest_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(AutorizacionColaRequest& a, AutorizacionColaRequest& b) {
     a.Swap(&b);
@@ -997,7 +1186,7 @@ class RespuestaSimple final :
                &_RespuestaSimple_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(RespuestaSimple& a, RespuestaSimple& b) {
     a.Swap(&b);
@@ -1161,7 +1350,7 @@ class MensajeTexto final :
                &_MensajeTexto_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(MensajeTexto& a, MensajeTexto& b) {
     a.Swap(&b);
@@ -1362,7 +1551,7 @@ class ListaMensajes final :
                &_ListaMensajes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(ListaMensajes& a, ListaMensajes& b) {
     a.Swap(&b);
@@ -1519,7 +1708,7 @@ class ListaNombres final :
                &_ListaNombres_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(ListaNombres& a, ListaNombres& b) {
     a.Swap(&b);
@@ -1741,6 +1930,160 @@ inline void Credenciales::set_allocated_password(std::string* password) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:mom.Credenciales.password)
+}
+
+// -------------------------------------------------------------------
+
+// TokenConExpiracion
+
+// string username = 1;
+inline void TokenConExpiracion::clear_username() {
+  _impl_.username_.ClearToEmpty();
+}
+inline const std::string& TokenConExpiracion::username() const {
+  // @@protoc_insertion_point(field_get:mom.TokenConExpiracion.username)
+  return _internal_username();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TokenConExpiracion::set_username(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.username_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:mom.TokenConExpiracion.username)
+}
+inline std::string* TokenConExpiracion::mutable_username() {
+  std::string* _s = _internal_mutable_username();
+  // @@protoc_insertion_point(field_mutable:mom.TokenConExpiracion.username)
+  return _s;
+}
+inline const std::string& TokenConExpiracion::_internal_username() const {
+  return _impl_.username_.Get();
+}
+inline void TokenConExpiracion::_internal_set_username(const std::string& value) {
+  
+  _impl_.username_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TokenConExpiracion::_internal_mutable_username() {
+  
+  return _impl_.username_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TokenConExpiracion::release_username() {
+  // @@protoc_insertion_point(field_release:mom.TokenConExpiracion.username)
+  return _impl_.username_.Release();
+}
+inline void TokenConExpiracion::set_allocated_username(std::string* username) {
+  if (username != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.username_.SetAllocated(username, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.username_.IsDefault()) {
+    _impl_.username_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:mom.TokenConExpiracion.username)
+}
+
+// string token = 2;
+inline void TokenConExpiracion::clear_token() {
+  _impl_.token_.ClearToEmpty();
+}
+inline const std::string& TokenConExpiracion::token() const {
+  // @@protoc_insertion_point(field_get:mom.TokenConExpiracion.token)
+  return _internal_token();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TokenConExpiracion::set_token(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.token_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:mom.TokenConExpiracion.token)
+}
+inline std::string* TokenConExpiracion::mutable_token() {
+  std::string* _s = _internal_mutable_token();
+  // @@protoc_insertion_point(field_mutable:mom.TokenConExpiracion.token)
+  return _s;
+}
+inline const std::string& TokenConExpiracion::_internal_token() const {
+  return _impl_.token_.Get();
+}
+inline void TokenConExpiracion::_internal_set_token(const std::string& value) {
+  
+  _impl_.token_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TokenConExpiracion::_internal_mutable_token() {
+  
+  return _impl_.token_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TokenConExpiracion::release_token() {
+  // @@protoc_insertion_point(field_release:mom.TokenConExpiracion.token)
+  return _impl_.token_.Release();
+}
+inline void TokenConExpiracion::set_allocated_token(std::string* token) {
+  if (token != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.token_.SetAllocated(token, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.token_.IsDefault()) {
+    _impl_.token_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:mom.TokenConExpiracion.token)
+}
+
+// string expiracion = 3;
+inline void TokenConExpiracion::clear_expiracion() {
+  _impl_.expiracion_.ClearToEmpty();
+}
+inline const std::string& TokenConExpiracion::expiracion() const {
+  // @@protoc_insertion_point(field_get:mom.TokenConExpiracion.expiracion)
+  return _internal_expiracion();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TokenConExpiracion::set_expiracion(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.expiracion_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:mom.TokenConExpiracion.expiracion)
+}
+inline std::string* TokenConExpiracion::mutable_expiracion() {
+  std::string* _s = _internal_mutable_expiracion();
+  // @@protoc_insertion_point(field_mutable:mom.TokenConExpiracion.expiracion)
+  return _s;
+}
+inline const std::string& TokenConExpiracion::_internal_expiracion() const {
+  return _impl_.expiracion_.Get();
+}
+inline void TokenConExpiracion::_internal_set_expiracion(const std::string& value) {
+  
+  _impl_.expiracion_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TokenConExpiracion::_internal_mutable_expiracion() {
+  
+  return _impl_.expiracion_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TokenConExpiracion::release_expiracion() {
+  // @@protoc_insertion_point(field_release:mom.TokenConExpiracion.expiracion)
+  return _impl_.expiracion_.Release();
+}
+inline void TokenConExpiracion::set_allocated_expiracion(std::string* expiracion) {
+  if (expiracion != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.expiracion_.SetAllocated(expiracion, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.expiracion_.IsDefault()) {
+    _impl_.expiracion_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:mom.TokenConExpiracion.expiracion)
 }
 
 // -------------------------------------------------------------------
@@ -2613,6 +2956,8 @@ ListaNombres::mutable_nombres() {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

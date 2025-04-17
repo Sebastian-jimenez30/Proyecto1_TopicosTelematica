@@ -35,6 +35,21 @@ struct CredencialesDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CredencialesDefaultTypeInternal _Credenciales_default_instance_;
+PROTOBUF_CONSTEXPR TokenConExpiracion::TokenConExpiracion(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.username_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.token_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.expiracion_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct TokenConExpiracionDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TokenConExpiracionDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TokenConExpiracionDefaultTypeInternal() {}
+  union {
+    TokenConExpiracion _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TokenConExpiracionDefaultTypeInternal _TokenConExpiracion_default_instance_;
 PROTOBUF_CONSTEXPR Token::Token(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.token_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -149,7 +164,7 @@ struct ListaNombresDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ListaNombresDefaultTypeInternal _ListaNombres_default_instance_;
 }  // namespace mom
-static ::_pb::Metadata file_level_metadata_mom_2eproto[9];
+static ::_pb::Metadata file_level_metadata_mom_2eproto[10];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_mom_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_mom_2eproto = nullptr;
 
@@ -162,6 +177,15 @@ const uint32_t TableStruct_mom_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(prot
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::mom::Credenciales, _impl_.username_),
   PROTOBUF_FIELD_OFFSET(::mom::Credenciales, _impl_.password_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mom::TokenConExpiracion, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::mom::TokenConExpiracion, _impl_.username_),
+  PROTOBUF_FIELD_OFFSET(::mom::TokenConExpiracion, _impl_.token_),
+  PROTOBUF_FIELD_OFFSET(::mom::TokenConExpiracion, _impl_.expiracion_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::mom::Token, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -230,18 +254,20 @@ const uint32_t TableStruct_mom_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(prot
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::mom::Credenciales)},
-  { 8, -1, -1, sizeof(::mom::Token)},
-  { 15, -1, -1, sizeof(::mom::AccionConToken)},
-  { 23, -1, -1, sizeof(::mom::MensajeConToken)},
-  { 32, -1, -1, sizeof(::mom::AutorizacionColaRequest)},
-  { 41, -1, -1, sizeof(::mom::RespuestaSimple)},
-  { 49, -1, -1, sizeof(::mom::MensajeTexto)},
-  { 59, -1, -1, sizeof(::mom::ListaMensajes)},
-  { 66, -1, -1, sizeof(::mom::ListaNombres)},
+  { 8, -1, -1, sizeof(::mom::TokenConExpiracion)},
+  { 17, -1, -1, sizeof(::mom::Token)},
+  { 24, -1, -1, sizeof(::mom::AccionConToken)},
+  { 32, -1, -1, sizeof(::mom::MensajeConToken)},
+  { 41, -1, -1, sizeof(::mom::AutorizacionColaRequest)},
+  { 50, -1, -1, sizeof(::mom::RespuestaSimple)},
+  { 58, -1, -1, sizeof(::mom::MensajeTexto)},
+  { 68, -1, -1, sizeof(::mom::ListaMensajes)},
+  { 75, -1, -1, sizeof(::mom::ListaNombres)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::mom::_Credenciales_default_instance_._instance,
+  &::mom::_TokenConExpiracion_default_instance_._instance,
   &::mom::_Token_default_instance_._instance,
   &::mom::_AccionConToken_default_instance_._instance,
   &::mom::_MensajeConToken_default_instance_._instance,
@@ -254,46 +280,50 @@ static const ::_pb::Message* const file_default_instances[] = {
 
 const char descriptor_table_protodef_mom_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\tmom.proto\022\003mom\"2\n\014Credenciales\022\020\n\010user"
-  "name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"\026\n\005Token\022\r\n"
-  "\005token\030\001 \001(\t\"/\n\016AccionConToken\022\r\n\005token\030"
-  "\001 \001(\t\022\016\n\006nombre\030\002 \001(\t\"C\n\017MensajeConToken"
-  "\022\r\n\005token\030\001 \001(\t\022\016\n\006nombre\030\002 \001(\t\022\021\n\tconte"
-  "nido\030\003 \001(\t\"Q\n\027AutorizacionColaRequest\022\r\n"
-  "\005token\030\001 \001(\t\022\016\n\006nombre\030\002 \001(\t\022\027\n\017usuarioO"
-  "bjetivo\030\003 \001(\t\"1\n\017RespuestaSimple\022\r\n\005exit"
-  "o\030\001 \001(\010\022\017\n\007mensaje\030\002 \001(\t\"V\n\014MensajeTexto"
-  "\022\021\n\tcontenido\030\001 \001(\t\022\021\n\tremitente\030\002 \001(\t\022\r"
-  "\n\005canal\030\003 \001(\t\022\021\n\ttimestamp\030\004 \001(\t\"4\n\rList"
-  "aMensajes\022#\n\010mensajes\030\001 \003(\0132\021.mom.Mensaj"
-  "eTexto\"\037\n\014ListaNombres\022\017\n\007nombres\030\001 \003(\t2"
-  "\321\006\n\nMomService\022;\n\020RegistrarUsuario\022\021.mom"
-  ".Credenciales\032\024.mom.RespuestaSimple\0222\n\021A"
-  "utenticarUsuario\022\021.mom.Credenciales\032\n.mo"
-  "m.Token\0226\n\tCrearCola\022\023.mom.AccionConToke"
-  "n\032\024.mom.RespuestaSimple\0229\n\014EliminarCola\022"
-  "\023.mom.AccionConToken\032\024.mom.RespuestaSimp"
-  "le\022J\n\024AutorizarUsuarioCola\022\034.mom.Autoriz"
-  "acionColaRequest\032\024.mom.RespuestaSimple\022\?"
-  "\n\021EnviarMensajeCola\022\024.mom.MensajeConToke"
-  "n\032\024.mom.RespuestaSimple\022=\n\023ConsumirMensa"
-  "jeCola\022\023.mom.AccionConToken\032\021.mom.Mensaj"
-  "eTexto\022,\n\013ListarColas\022\n.mom.Token\032\021.mom."
-  "ListaNombres\0228\n\013CrearTopico\022\023.mom.Accion"
-  "ConToken\032\024.mom.RespuestaSimple\022;\n\016Elimin"
-  "arTopico\022\023.mom.AccionConToken\032\024.mom.Resp"
-  "uestaSimple\022>\n\021SuscribirseTopico\022\023.mom.A"
-  "ccionConToken\032\024.mom.RespuestaSimple\022>\n\020P"
-  "ublicarEnTopico\022\024.mom.MensajeConToken\032\024."
-  "mom.RespuestaSimple\022>\n\023ConsumirDesdeTopi"
-  "co\022\023.mom.AccionConToken\032\022.mom.ListaMensa"
-  "jes\022.\n\rListarTopicos\022\n.mom.Token\032\021.mom.L"
-  "istaNombresb\006proto3"
+  "name\030\001 \001(\t\022\020\n\010password\030\002 \001(\t\"I\n\022TokenCon"
+  "Expiracion\022\020\n\010username\030\001 \001(\t\022\r\n\005token\030\002 "
+  "\001(\t\022\022\n\nexpiracion\030\003 \001(\t\"\026\n\005Token\022\r\n\005toke"
+  "n\030\001 \001(\t\"/\n\016AccionConToken\022\r\n\005token\030\001 \001(\t"
+  "\022\016\n\006nombre\030\002 \001(\t\"C\n\017MensajeConToken\022\r\n\005t"
+  "oken\030\001 \001(\t\022\016\n\006nombre\030\002 \001(\t\022\021\n\tcontenido\030"
+  "\003 \001(\t\"Q\n\027AutorizacionColaRequest\022\r\n\005toke"
+  "n\030\001 \001(\t\022\016\n\006nombre\030\002 \001(\t\022\027\n\017usuarioObjeti"
+  "vo\030\003 \001(\t\"1\n\017RespuestaSimple\022\r\n\005exito\030\001 \001"
+  "(\010\022\017\n\007mensaje\030\002 \001(\t\"V\n\014MensajeTexto\022\021\n\tc"
+  "ontenido\030\001 \001(\t\022\021\n\tremitente\030\002 \001(\t\022\r\n\005can"
+  "al\030\003 \001(\t\022\021\n\ttimestamp\030\004 \001(\t\"4\n\rListaMens"
+  "ajes\022#\n\010mensajes\030\001 \003(\0132\021.mom.MensajeText"
+  "o\"\037\n\014ListaNombres\022\017\n\007nombres\030\001 \003(\t2\227\007\n\nM"
+  "omService\022;\n\020RegistrarUsuario\022\021.mom.Cred"
+  "enciales\032\024.mom.RespuestaSimple\0222\n\021Autent"
+  "icarUsuario\022\021.mom.Credenciales\032\n.mom.Tok"
+  "en\022D\n\023GuardarTokenReplica\022\027.mom.TokenCon"
+  "Expiracion\032\024.mom.RespuestaSimple\0226\n\tCrea"
+  "rCola\022\023.mom.AccionConToken\032\024.mom.Respues"
+  "taSimple\0229\n\014EliminarCola\022\023.mom.AccionCon"
+  "Token\032\024.mom.RespuestaSimple\022J\n\024Autorizar"
+  "UsuarioCola\022\034.mom.AutorizacionColaReques"
+  "t\032\024.mom.RespuestaSimple\022\?\n\021EnviarMensaje"
+  "Cola\022\024.mom.MensajeConToken\032\024.mom.Respues"
+  "taSimple\022=\n\023ConsumirMensajeCola\022\023.mom.Ac"
+  "cionConToken\032\021.mom.MensajeTexto\022,\n\013Lista"
+  "rColas\022\n.mom.Token\032\021.mom.ListaNombres\0228\n"
+  "\013CrearTopico\022\023.mom.AccionConToken\032\024.mom."
+  "RespuestaSimple\022;\n\016EliminarTopico\022\023.mom."
+  "AccionConToken\032\024.mom.RespuestaSimple\022>\n\021"
+  "SuscribirseTopico\022\023.mom.AccionConToken\032\024"
+  ".mom.RespuestaSimple\022>\n\020PublicarEnTopico"
+  "\022\024.mom.MensajeConToken\032\024.mom.RespuestaSi"
+  "mple\022>\n\023ConsumirDesdeTopico\022\023.mom.Accion"
+  "ConToken\032\022.mom.ListaMensajes\022.\n\rListarTo"
+  "picos\022\n.mom.Token\032\021.mom.ListaNombresb\006pr"
+  "oto3"
   ;
 static ::_pbi::once_flag descriptor_table_mom_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_mom_2eproto = {
-    false, false, 1379, descriptor_table_protodef_mom_2eproto,
+    false, false, 1524, descriptor_table_protodef_mom_2eproto,
     "mom.proto",
-    &descriptor_table_mom_2eproto_once, nullptr, 0, 9,
+    &descriptor_table_mom_2eproto_once, nullptr, 0, 10,
     schemas, file_default_instances, TableStruct_mom_2eproto::offsets,
     file_level_metadata_mom_2eproto, file_level_enum_descriptors_mom_2eproto,
     file_level_service_descriptors_mom_2eproto,
@@ -561,6 +591,309 @@ void Credenciales::InternalSwap(Credenciales* other) {
 
 // ===================================================================
 
+class TokenConExpiracion::_Internal {
+ public:
+};
+
+TokenConExpiracion::TokenConExpiracion(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:mom.TokenConExpiracion)
+}
+TokenConExpiracion::TokenConExpiracion(const TokenConExpiracion& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  TokenConExpiracion* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.username_){}
+    , decltype(_impl_.token_){}
+    , decltype(_impl_.expiracion_){}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.username_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.username_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_username().empty()) {
+    _this->_impl_.username_.Set(from._internal_username(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.token_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.token_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_token().empty()) {
+    _this->_impl_.token_.Set(from._internal_token(), 
+      _this->GetArenaForAllocation());
+  }
+  _impl_.expiracion_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.expiracion_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_expiracion().empty()) {
+    _this->_impl_.expiracion_.Set(from._internal_expiracion(), 
+      _this->GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:mom.TokenConExpiracion)
+}
+
+inline void TokenConExpiracion::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.username_){}
+    , decltype(_impl_.token_){}
+    , decltype(_impl_.expiracion_){}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+  _impl_.username_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.username_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.token_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.token_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.expiracion_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.expiracion_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+TokenConExpiracion::~TokenConExpiracion() {
+  // @@protoc_insertion_point(destructor:mom.TokenConExpiracion)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void TokenConExpiracion::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.username_.Destroy();
+  _impl_.token_.Destroy();
+  _impl_.expiracion_.Destroy();
+}
+
+void TokenConExpiracion::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void TokenConExpiracion::Clear() {
+// @@protoc_insertion_point(message_clear_start:mom.TokenConExpiracion)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  _impl_.username_.ClearToEmpty();
+  _impl_.token_.ClearToEmpty();
+  _impl_.expiracion_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* TokenConExpiracion::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string username = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_username();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "mom.TokenConExpiracion.username"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string token = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_token();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "mom.TokenConExpiracion.token"));
+        } else
+          goto handle_unusual;
+        continue;
+      // string expiracion = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_expiracion();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "mom.TokenConExpiracion.expiracion"));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* TokenConExpiracion::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mom.TokenConExpiracion)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string username = 1;
+  if (!this->_internal_username().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_username().data(), static_cast<int>(this->_internal_username().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mom.TokenConExpiracion.username");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_username(), target);
+  }
+
+  // string token = 2;
+  if (!this->_internal_token().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_token().data(), static_cast<int>(this->_internal_token().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mom.TokenConExpiracion.token");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_token(), target);
+  }
+
+  // string expiracion = 3;
+  if (!this->_internal_expiracion().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_expiracion().data(), static_cast<int>(this->_internal_expiracion().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "mom.TokenConExpiracion.expiracion");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_expiracion(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mom.TokenConExpiracion)
+  return target;
+}
+
+size_t TokenConExpiracion::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mom.TokenConExpiracion)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string username = 1;
+  if (!this->_internal_username().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_username());
+  }
+
+  // string token = 2;
+  if (!this->_internal_token().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_token());
+  }
+
+  // string expiracion = 3;
+  if (!this->_internal_expiracion().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_expiracion());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData TokenConExpiracion::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    TokenConExpiracion::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*TokenConExpiracion::GetClassData() const { return &_class_data_; }
+
+
+void TokenConExpiracion::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<TokenConExpiracion*>(&to_msg);
+  auto& from = static_cast<const TokenConExpiracion&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:mom.TokenConExpiracion)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_username().empty()) {
+    _this->_internal_set_username(from._internal_username());
+  }
+  if (!from._internal_token().empty()) {
+    _this->_internal_set_token(from._internal_token());
+  }
+  if (!from._internal_expiracion().empty()) {
+    _this->_internal_set_expiracion(from._internal_expiracion());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void TokenConExpiracion::CopyFrom(const TokenConExpiracion& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mom.TokenConExpiracion)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool TokenConExpiracion::IsInitialized() const {
+  return true;
+}
+
+void TokenConExpiracion::InternalSwap(TokenConExpiracion* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.username_, lhs_arena,
+      &other->_impl_.username_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.token_, lhs_arena,
+      &other->_impl_.token_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.expiracion_, lhs_arena,
+      &other->_impl_.expiracion_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata TokenConExpiracion::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
+      file_level_metadata_mom_2eproto[1]);
+}
+
+// ===================================================================
+
 class Token::_Internal {
  public:
 };
@@ -759,7 +1092,7 @@ void Token::InternalSwap(Token* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata Token::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
-      file_level_metadata_mom_2eproto[1]);
+      file_level_metadata_mom_2eproto[2]);
 }
 
 // ===================================================================
@@ -1012,7 +1345,7 @@ void AccionConToken::InternalSwap(AccionConToken* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata AccionConToken::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
-      file_level_metadata_mom_2eproto[2]);
+      file_level_metadata_mom_2eproto[3]);
 }
 
 // ===================================================================
@@ -1315,7 +1648,7 @@ void MensajeConToken::InternalSwap(MensajeConToken* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata MensajeConToken::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
-      file_level_metadata_mom_2eproto[3]);
+      file_level_metadata_mom_2eproto[4]);
 }
 
 // ===================================================================
@@ -1618,7 +1951,7 @@ void AutorizacionColaRequest::InternalSwap(AutorizacionColaRequest* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata AutorizacionColaRequest::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
-      file_level_metadata_mom_2eproto[4]);
+      file_level_metadata_mom_2eproto[5]);
 }
 
 // ===================================================================
@@ -1848,7 +2181,7 @@ void RespuestaSimple::InternalSwap(RespuestaSimple* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata RespuestaSimple::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
-      file_level_metadata_mom_2eproto[5]);
+      file_level_metadata_mom_2eproto[6]);
 }
 
 // ===================================================================
@@ -2201,7 +2534,7 @@ void MensajeTexto::InternalSwap(MensajeTexto* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata MensajeTexto::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
-      file_level_metadata_mom_2eproto[6]);
+      file_level_metadata_mom_2eproto[7]);
 }
 
 // ===================================================================
@@ -2386,7 +2719,7 @@ void ListaMensajes::InternalSwap(ListaMensajes* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ListaMensajes::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
-      file_level_metadata_mom_2eproto[7]);
+      file_level_metadata_mom_2eproto[8]);
 }
 
 // ===================================================================
@@ -2576,7 +2909,7 @@ void ListaNombres::InternalSwap(ListaNombres* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ListaNombres::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_mom_2eproto_getter, &descriptor_table_mom_2eproto_once,
-      file_level_metadata_mom_2eproto[8]);
+      file_level_metadata_mom_2eproto[9]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -2585,6 +2918,10 @@ PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::mom::Credenciales*
 Arena::CreateMaybeMessage< ::mom::Credenciales >(Arena* arena) {
   return Arena::CreateMessageInternal< ::mom::Credenciales >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mom::TokenConExpiracion*
+Arena::CreateMaybeMessage< ::mom::TokenConExpiracion >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::mom::TokenConExpiracion >(arena);
 }
 template<> PROTOBUF_NOINLINE ::mom::Token*
 Arena::CreateMaybeMessage< ::mom::Token >(Arena* arena) {

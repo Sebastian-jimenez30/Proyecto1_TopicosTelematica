@@ -1,16 +1,15 @@
 package handlers
 
 import (
-	"context"
 	"net/http"
 	"time"
 
-	pb "mom_gateway/pb"
+	"mom_gateway/cluster"
 
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterHandler(client pb.MomServiceClient) gin.HandlerFunc {
+func RegisterHandler(cl *cluster.Cluster) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var body struct {
 			Username string `json:"username"`
@@ -21,28 +20,16 @@ func RegisterHandler(client pb.MomServiceClient) gin.HandlerFunc {
 			return
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		defer cancel()
-
-		res, err := client.RegistrarUsuario(ctx, &pb.Credenciales{
-			Username: body.Username,
-			Password: body.Password,
-		})
-
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Fallo al registrar usuario"})
-			return
-		}
-
-		if res.Exito {
-			c.JSON(http.StatusOK, gin.H{"mensaje": res.Mensaje})
+		ok, msg := cl.RegistrarUsuarioEnTodos(body.Username, body.Password)
+		if ok {
+			c.JSON(http.StatusOK, gin.H{"mensaje": msg})
 		} else {
-			c.JSON(http.StatusBadRequest, gin.H{"error": res.Mensaje})
+			c.JSON(http.StatusBadRequest, gin.H{"error": msg})
 		}
 	}
 }
 
-func LoginHandler(client pb.MomServiceClient) gin.HandlerFunc {
+func LoginHandler(cl *cluster.Cluster) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var body struct {
 			Username string `json:"username"`
@@ -53,19 +40,16 @@ func LoginHandler(client pb.MomServiceClient) gin.HandlerFunc {
 			return
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		defer cancel()
-
-		res, err := client.AutenticarUsuario(ctx, &pb.Credenciales{
-			Username: body.Username,
-			Password: body.Password,
-		})
-
-		if err != nil || res.Token == "" {
+		ok, token := cl.AutenticarUsuario(body.Username, body.Password)
+		if !ok || token == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Credenciales inválidas"})
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"token": res.Token})
+		// ⚠️ Estimar 1 hora de expiración (opcional: se puede calcular desde JWT también)
+		exp := time.Now().Add(1 * time.Hour).Format("2006-01-02 15:04:05")
+		cl.ReplicarTokenEnTodos(body.Username, token, exp)
+
+		c.JSON(http.StatusOK, gin.H{"token": token})
 	}
 }

@@ -1,83 +1,160 @@
 package cluster
 
 import (
-	"encoding/json"
+	"context"
+	"crypto/sha1"
 	"fmt"
-	"hash/crc32"
-	"io/ioutil"
 	"log"
-	"sync"
+	"time"
 
 	pb "mom_gateway/pb"
 
 	"google.golang.org/grpc"
 )
 
+// Nodo representa un MOM individual
 type Nodo struct {
-	ID     string `json:"id"`
-	Host   string `json:"host"`
-	Puerto int    `json:"puerto"`
+	Nombre   string
+	Cliente  pb.MomServiceClient
+	Endpoint string
 }
 
-type Cluster interface {
-	SeleccionarPrimario(nombre string) Nodo
-	SeleccionarSecundario(primario Nodo) Nodo
-	GetCliente(id string) pb.MomServiceClient
+// Cluster contiene todos los nodos del sistema distribuido
+type Cluster struct {
+	Nodos []Nodo
 }
 
-type ClusterManager struct {
-	Clientes map[string]pb.MomServiceClient
-	Nodos    []Nodo
-	mu       sync.Mutex
-}
-
-func CargarCluster(path string) (*ClusterManager, error) {
-	data, err := ioutil.ReadFile(path)
-	if err != nil {
-		return nil, err
+// Crea un nuevo clúster conectándose a los tres MOMs
+func NuevoCluster() *Cluster {
+	endpoints := []string{
+		"0.0.0.0:50051", // mom1
+		"0.0.0.0:50052", // mom2
+		"0.0.0.0:50053", // mom3
 	}
 
-	var config struct {
-		Nodos []Nodo `json:"nodos"`
-	}
-	if err := json.Unmarshal(data, &config); err != nil {
-		return nil, err
-	}
-
-	cm := &ClusterManager{
-		Clientes: make(map[string]pb.MomServiceClient),
-		Nodos:    config.Nodos,
-	}
-
-	for _, nodo := range config.Nodos {
-		conn, err := grpc.Dial(fmt.Sprintf("%s:%d", nodo.Host, nodo.Puerto), grpc.WithInsecure())
+	var nodos []Nodo
+	for i, ep := range endpoints {
+		conn, err := grpc.Dial(ep, grpc.WithInsecure())
 		if err != nil {
-			log.Printf("⚠️ Error conectando a %s: %v", nodo.ID, err)
+			log.Fatalf("❌ Error al conectar con MOM en %s: %v", ep, err)
+		}
+		nombre := fmt.Sprintf("mom%d", i+1)
+		nodos = append(nodos, Nodo{
+			Nombre:   nombre,
+			Cliente:  pb.NewMomServiceClient(conn),
+			Endpoint: ep,
+		})
+	}
+
+	return &Cluster{Nodos: nodos}
+}
+
+// Determina el nodo responsable de un nombre (cola o tópico) usando hashing
+func (c *Cluster) NodoResponsable(nombre string) Nodo {
+	hash := sha1.Sum([]byte(nombre))
+	idx := int(hash[0]) % len(c.Nodos)
+	return c.Nodos[idx]
+}
+
+// Devuelve el siguiente nodo circularmente (para replicación simple)
+func (c *Cluster) NodoSiguiente(actual Nodo) Nodo {
+	for i, nodo := range c.Nodos {
+		if nodo.Endpoint == actual.Endpoint {
+			return c.Nodos[(i+1)%len(c.Nodos)]
+		}
+	}
+	return c.Nodos[0]
+}
+
+// 🔐 Registra un usuario en todos los nodos (replicación fuerte)
+func (c *Cluster) RegistrarUsuarioEnTodos(username, password string) (bool, string) {
+	okCount := 0
+	var lastMsg string
+
+	for _, nodo := range c.Nodos {
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+
+		req := &pb.Credenciales{Username: username, Password: password}
+		res, err := nodo.Cliente.RegistrarUsuario(ctx, req)
+		if err != nil {
+			log.Printf("⚠️ Error al registrar en %s: %v", nodo.Nombre, err)
 			continue
 		}
-		cm.Clientes[nodo.ID] = pb.NewMomServiceClient(conn)
+
+		if res.GetExito() {
+			okCount++
+		}
+		lastMsg = res.GetMensaje()
 	}
 
-	return cm, nil
+	return okCount > 0, lastMsg
 }
 
-func (cm *ClusterManager) SeleccionarPrimario(nombre string) Nodo {
-	hash := crc32.ChecksumIEEE([]byte(nombre))
-	index := int(hash) % len(cm.Nodos)
-	return cm.Nodos[index]
-}
+// 🔑 Intenta autenticar al usuario en los nodos hasta que uno responda exitosamente
+func (c *Cluster) AutenticarUsuario(username, password string) (bool, string) {
+	for _, nodo := range c.Nodos {
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
 
-func (cm *ClusterManager) SeleccionarSecundario(primario Nodo) Nodo {
-	for i, n := range cm.Nodos {
-		if n.ID == primario.ID {
-			return cm.Nodos[(i+1)%len(cm.Nodos)]
+		req := &pb.Credenciales{Username: username, Password: password}
+		res, err := nodo.Cliente.AutenticarUsuario(ctx, req)
+		if err != nil {
+			log.Printf("⚠️ Fallo en %s: %v", nodo.Nombre, err)
+			continue
+		}
+
+		if res.GetToken() != "" {
+			return true, res.GetToken()
 		}
 	}
-	return primario
+	return false, ""
 }
 
-func (cm *ClusterManager) GetCliente(id string) pb.MomServiceClient {
-	cm.mu.Lock()
-	defer cm.mu.Unlock()
-	return cm.Clientes[id]
+// 🧠 Replica el token en todos los nodos para permitir login global
+func (c *Cluster) ReplicarTokenEnTodos(username, token, expiracion string) {
+	for _, nodo := range c.Nodos {
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+
+		_, err := nodo.Cliente.GuardarTokenReplica(ctx, &pb.TokenConExpiracion{
+			Username:   username,
+			Token:      token,
+			Expiracion: expiracion,
+		})
+
+		if err != nil {
+			log.Printf("⚠️ Fallo al replicar token en %s: %v", nodo.Nombre, err)
+		} else {
+			log.Printf("✅ Token replicado en %s", nodo.Nombre)
+		}
+	}
+}
+
+// Devuelve todos los clientes gRPC disponibles (para usos especiales)
+func (c *Cluster) TodosLosClientes() []pb.MomServiceClient {
+	var clientes []pb.MomServiceClient
+	for _, nodo := range c.Nodos {
+		clientes = append(clientes, nodo.Cliente)
+	}
+	return clientes
+}
+
+// ReplicarEnNodosSiguientes aplica una operación gRPC en los 2 nodos siguientes del nodo responsable
+func (c *Cluster) ReplicarEnNodosSiguientes(nombre string, replicador func(pb.MomServiceClient) error) {
+	principal := c.NodoResponsable(nombre)
+	secundario1 := c.NodoSiguiente(principal)
+	secundario2 := c.NodoSiguiente(secundario1)
+
+	nodos := []Nodo{secundario1, secundario2}
+
+	for _, nodo := range nodos {
+		go func(n Nodo) {
+			if err := replicador(n.Cliente); err != nil {
+				log.Printf("⚠️ Error replicando en %s: %v", n.Nombre, err)
+			} else {
+				log.Printf("✅ Replicado correctamente en %s", n.Nombre)
+			}
+		}(nodo)
+	}
 }

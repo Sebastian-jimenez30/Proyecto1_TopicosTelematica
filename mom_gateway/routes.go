@@ -1,30 +1,34 @@
 package main
 
 import (
+	"mom_gateway/cluster"
 	"mom_gateway/handlers"
-	pb "mom_gateway/pb"
 
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(client pb.MomServiceClient) *gin.Engine {
+func SetupRoutes(cl *cluster.Cluster) *gin.Engine {
 	r := gin.Default()
 
 	// Rutas de autenticación
-	r.POST("/register", handlers.RegisterHandler(client))
-	r.POST("/login", handlers.LoginHandler(client))
-	r.POST("/colas", handlers.CrearColaHandler(client))
-	r.DELETE("/colas/:nombre", handlers.EliminarColaHandler(client))
-	r.POST("/colas/:nombre/autorizar", handlers.AutorizarColaHandler(client))
-	r.POST("/colas/:nombre/enviar", handlers.EnviarMensajeColaHandler(client))
-	r.GET("/colas/:nombre/consumir", handlers.ConsumirColaHandler(client))
-	r.POST("/topicos", handlers.CrearTopicoHandler(client))
-	r.DELETE("/topicos/:nombre", handlers.EliminarTopicoHandler(client))
-	r.POST("/topicos/:nombre/suscribir", handlers.SuscribirseTopicoHandler(client))
-	r.POST("/topicos/:nombre/publicar", handlers.PublicarTopicoHandler(client))
-	r.GET("/topicos/:nombre/consumir", handlers.ConsumirTopicoHandler(client))
-	r.GET("/colas", handlers.ListarColasHandler(client))
-	r.GET("/topicos", handlers.ListarTopicosHandler(client))
+	r.POST("/register", handlers.RegisterHandler(cl))
+	r.POST("/login", handlers.LoginHandler(cl))
+
+	// Rutas de colas
+	r.POST("/colas", handlers.CrearColaHandler(cl))
+	r.DELETE("/colas/:nombre", handlers.EliminarColaHandler(cl))
+	r.POST("/colas/:nombre/autorizar", handlers.AutorizarColaHandler(cl))
+	r.POST("/colas/:nombre/enviar", handlers.EnviarMensajeColaHandler(cl))
+	r.GET("/colas/:nombre/consumir", handlers.ConsumirColaHandler(cl))
+	r.GET("/colas", handlers.ListarColasHandler(cl))
+
+	// Rutas de tópicos
+	r.POST("/topicos", handlers.CrearTopicoHandler(cl))
+	r.DELETE("/topicos/:nombre", handlers.EliminarTopicoHandler(cl))
+	r.POST("/topicos/:nombre/suscribir", handlers.SuscribirseTopicoHandler(cl))
+	r.POST("/topicos/:nombre/publicar", handlers.PublicarTopicoHandler(cl))
+	r.GET("/topicos/:nombre/consumir", handlers.ConsumirTopicoHandler(cl))
+	r.GET("/topicos", handlers.ListarTopicosHandler(cl))
 
 	return r
 }

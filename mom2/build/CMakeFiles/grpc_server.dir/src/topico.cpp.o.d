@@ -1,7 +1,7 @@
 CMakeFiles/grpc_server.dir/src/topico.cpp.o: \
- /home/sebastian/projects/mom_core_v2_node2/src/topico.cpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/topico.cpp \
  /usr/include/stdc-predef.h \
- /home/sebastian/projects/mom_core_v2_node2/include/topico.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/include/topico.hpp \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -120,9 +120,9 @@ CMakeFiles/grpc_server.dir/src/topico.cpp.o: \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc \
- /home/sebastian/projects/mom_core_v2_node2/include/usuario.hpp \
- /home/sebastian/projects/mom_core_v2_node2/external/jwt-cpp/include/jwt-cpp/jwt.h \
- /home/sebastian/projects/mom_core_v2_node2/external/jwt-cpp/include/picojson/picojson.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/include/usuario.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/external/jwt-cpp/include/jwt-cpp/jwt.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/external/jwt-cpp/include/picojson/picojson.h \
  /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
  /usr/include/c++/13/bits/algorithmfwd.h \
  /usr/include/c++/13/bits/stl_heap.h \
@@ -202,7 +202,7 @@ CMakeFiles/grpc_server.dir/src/topico.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
  /usr/include/inttypes.h \
- /home/sebastian/projects/mom_core_v2_node2/external/jwt-cpp/include/jwt-cpp/base.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/external/jwt-cpp/include/jwt-cpp/base.h \
  /usr/include/c++/13/array /usr/include/c++/13/compare \
  /usr/include/openssl/ec.h /usr/include/openssl/macros.h \
  /usr/include/x86_64-linux-gnu/openssl/opensslconf.h \
@@ -278,8 +278,8 @@ CMakeFiles/grpc_server.dir/src/topico.cpp.o: \
  /usr/include/c++/13/bits/stl_multiset.h \
  /usr/include/c++/13/experimental/type_traits \
  /usr/include/c++/13/experimental/bits/lfts_config.h \
- /home/sebastian/projects/mom_core_v2_node2/external/jwt-cpp/include/jwt-cpp/traits/kazuho-picojson/defaults.h \
- /home/sebastian/projects/mom_core_v2_node2/external/jwt-cpp/include/jwt-cpp/traits/kazuho-picojson/traits.h \
- /home/sebastian/projects/mom_core_v2_node2/include/mensaje.hpp \
- /home/sebastian/projects/mom_core_v2_node2/include/persistencia.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/external/jwt-cpp/include/jwt-cpp/traits/kazuho-picojson/defaults.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/external/jwt-cpp/include/jwt-cpp/traits/kazuho-picojson/traits.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/include/mensaje.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/include/persistencia.hpp \
  /usr/include/sqlite3.h

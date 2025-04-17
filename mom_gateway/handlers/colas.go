@@ -5,12 +5,13 @@ import (
 	"net/http"
 	"time"
 
+	"mom_gateway/cluster"
 	pb "mom_gateway/pb"
 
 	"github.com/gin-gonic/gin"
 )
 
-func CrearColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
+func CrearColaHandler(cl *cluster.Cluster) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var body struct {
 			Nombre string `json:"nombre"`
@@ -26,20 +27,23 @@ func CrearColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 			return
 		}
 
+		nodo := cl.NodoResponsable(body.Nombre)
+		req := &pb.AccionConToken{Token: token, Nombre: body.Nombre}
+
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		defer cancel()
 
-		req := &pb.AccionConToken{
-			Token:  token,
-			Nombre: body.Nombre,
-		}
-		res, err := client.CrearCola(ctx, req)
+		res, err := nodo.Cliente.CrearCola(ctx, req)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al crear cola"})
 			return
 		}
 
 		if res.Exito {
+			go cl.ReplicarEnNodosSiguientes(body.Nombre, func(client pb.MomServiceClient) error {
+				_, err := client.CrearCola(context.Background(), req)
+				return err
+			})
 			c.JSON(http.StatusOK, gin.H{"mensaje": res.Mensaje})
 		} else {
 			c.JSON(http.StatusBadRequest, gin.H{"error": res.Mensaje})
@@ -47,7 +51,7 @@ func CrearColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 	}
 }
 
-func EliminarColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
+func EliminarColaHandler(cl *cluster.Cluster) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		nombreCola := c.Param("nombre")
 		if nombreCola == "" {
@@ -61,20 +65,23 @@ func EliminarColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 			return
 		}
 
+		nodo := cl.NodoResponsable(nombreCola)
+		req := &pb.AccionConToken{Token: token, Nombre: nombreCola}
+
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		defer cancel()
 
-		req := &pb.AccionConToken{
-			Token:  token,
-			Nombre: nombreCola,
-		}
-		res, err := client.EliminarCola(ctx, req)
+		res, err := nodo.Cliente.EliminarCola(ctx, req)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al eliminar cola"})
 			return
 		}
 
 		if res.Exito {
+			go cl.ReplicarEnNodosSiguientes(nombreCola, func(client pb.MomServiceClient) error {
+				_, err := client.EliminarCola(context.Background(), req)
+				return err
+			})
 			c.JSON(http.StatusOK, gin.H{"mensaje": res.Mensaje})
 		} else {
 			c.JSON(http.StatusForbidden, gin.H{"error": res.Mensaje})
@@ -82,7 +89,7 @@ func EliminarColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 	}
 }
 
-func AutorizarColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
+func AutorizarColaHandler(cl *cluster.Cluster) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		nombreCola := c.Param("nombre")
 		if nombreCola == "" {
@@ -104,22 +111,27 @@ func AutorizarColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 			return
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		defer cancel()
-
+		nodo := cl.NodoResponsable(nombreCola)
 		req := &pb.AutorizacionColaRequest{
 			Token:           token,
 			Nombre:          nombreCola,
 			UsuarioObjetivo: body.UsuarioObjetivo,
 		}
 
-		res, err := client.AutorizarUsuarioCola(ctx, req)
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+
+		res, err := nodo.Cliente.AutorizarUsuarioCola(ctx, req)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al autorizar usuario"})
 			return
 		}
 
 		if res.Exito {
+			go cl.ReplicarEnNodosSiguientes(nombreCola, func(client pb.MomServiceClient) error {
+				_, err := client.AutorizarUsuarioCola(context.Background(), req)
+				return err
+			})
 			c.JSON(http.StatusOK, gin.H{"mensaje": res.Mensaje})
 		} else {
 			c.JSON(http.StatusForbidden, gin.H{"error": res.Mensaje})
@@ -127,7 +139,7 @@ func AutorizarColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 	}
 }
 
-func EnviarMensajeColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
+func EnviarMensajeColaHandler(cl *cluster.Cluster) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		nombreCola := c.Param("nombre")
 		if nombreCola == "" {
@@ -149,22 +161,27 @@ func EnviarMensajeColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 			return
 		}
 
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-		defer cancel()
-
+		principal := cl.NodoResponsable(nombreCola)
 		req := &pb.MensajeConToken{
 			Token:     token,
 			Nombre:    nombreCola,
 			Contenido: body.Contenido,
 		}
 
-		res, err := client.EnviarMensajeCola(ctx, req)
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+
+		res, err := principal.Cliente.EnviarMensajeCola(ctx, req)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al enviar mensaje"})
 			return
 		}
 
 		if res.Exito {
+			go cl.ReplicarEnNodosSiguientes(nombreCola, func(client pb.MomServiceClient) error {
+				_, err := client.EnviarMensajeCola(context.Background(), req)
+				return err
+			})
 			c.JSON(http.StatusOK, gin.H{"mensaje": res.Mensaje})
 		} else {
 			c.JSON(http.StatusBadRequest, gin.H{"error": res.Mensaje})
@@ -172,7 +189,7 @@ func EnviarMensajeColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 	}
 }
 
-func ConsumirColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
+func ConsumirColaHandler(cl *cluster.Cluster) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		nombreCola := c.Param("nombre")
 		if nombreCola == "" {
@@ -186,21 +203,27 @@ func ConsumirColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 			return
 		}
 
+		principal := cl.NodoResponsable(nombreCola)
+		replica := cl.NodoSiguiente(principal)
+
+		req := &pb.AccionConToken{Token: token, Nombre: nombreCola}
+
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		defer cancel()
 
-		req := &pb.AccionConToken{
-			Token:  token,
-			Nombre: nombreCola,
+		res, err := principal.Cliente.ConsumirMensajeCola(ctx, req)
+
+		if err != nil || res.GetContenido() == "" {
+			ctxFallback, cancelFallback := context.WithTimeout(context.Background(), 2*time.Second)
+			defer cancelFallback()
+			res, err = replica.Cliente.ConsumirMensajeCola(ctxFallback, req)
 		}
 
-		res, err := client.ConsumirMensajeCola(ctx, req)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al consumir mensaje"})
 			return
 		}
 
-		// Si no hay contenido, devolvemos 204 No Content
 		if res.Contenido == "" {
 			c.JSON(http.StatusNoContent, gin.H{})
 			return
@@ -215,7 +238,7 @@ func ConsumirColaHandler(client pb.MomServiceClient) gin.HandlerFunc {
 	}
 }
 
-func ListarColasHandler(client pb.MomServiceClient) gin.HandlerFunc {
+func ListarColasHandler(cl *cluster.Cluster) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := ExtraerToken(c)
 		if token == "" {
@@ -223,11 +246,21 @@ func ListarColasHandler(client pb.MomServiceClient) gin.HandlerFunc {
 			return
 		}
 
+		principal := cl.NodoResponsable("colas")
+		replica := cl.NodoSiguiente(principal)
+
+		req := &pb.Token{Token: token}
+
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		defer cancel()
 
-		req := &pb.Token{Token: token}
-		res, err := client.ListarColas(ctx, req)
+		res, err := principal.Cliente.ListarColas(ctx, req)
+		if err != nil || len(res.GetNombres()) == 0 {
+			ctxFallback, cancelFallback := context.WithTimeout(context.Background(), 2*time.Second)
+			defer cancelFallback()
+			res, err = replica.Cliente.ListarColas(ctxFallback, req)
+		}
+
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error al listar colas"})
 			return

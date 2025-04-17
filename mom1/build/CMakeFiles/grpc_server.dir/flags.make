@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DCARES_STATICLIB
 
-CXX_INCLUDES = -I/home/sebastian/projects/mom_core_v2_node1/include -I/home/sebastian/projects/mom_core_v2_node1/external/jwt-cpp/include -I/home/sebastian/projects/mom_core_v2_node1/src
+CXX_INCLUDES = -I/home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/include -I/home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/external/jwt-cpp/include -I/home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/src
 
 CXX_FLAGS = -std=gnu++17
 

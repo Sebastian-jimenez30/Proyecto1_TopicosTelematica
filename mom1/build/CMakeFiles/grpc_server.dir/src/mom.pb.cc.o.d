@@ -1,7 +1,7 @@
 CMakeFiles/grpc_server.dir/src/mom.pb.cc.o: \
- /home/sebastian/projects/mom_core_v2_node1/src/mom.pb.cc \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/src/mom.pb.cc \
  /usr/include/stdc-predef.h \
- /home/sebastian/projects/mom_core_v2_node1/src/mom.pb.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/src/mom.pb.h \
  /usr/include/c++/13/limits \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \

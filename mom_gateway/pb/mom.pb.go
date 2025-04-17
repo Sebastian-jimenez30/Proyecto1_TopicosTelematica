@@ -73,6 +73,66 @@ func (x *Credenciales) GetPassword() string {
 	return ""
 }
 
+type TokenConExpiracion struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Username      string                 `protobuf:"bytes,1,opt,name=username,proto3" json:"username,omitempty"`
+	Token         string                 `protobuf:"bytes,2,opt,name=token,proto3" json:"token,omitempty"`
+	Expiracion    string                 `protobuf:"bytes,3,opt,name=expiracion,proto3" json:"expiracion,omitempty"` // en formato %Y-%m-%d %H:%M:%S
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TokenConExpiracion) Reset() {
+	*x = TokenConExpiracion{}
+	mi := &file_mom_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TokenConExpiracion) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TokenConExpiracion) ProtoMessage() {}
+
+func (x *TokenConExpiracion) ProtoReflect() protoreflect.Message {
+	mi := &file_mom_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TokenConExpiracion.ProtoReflect.Descriptor instead.
+func (*TokenConExpiracion) Descriptor() ([]byte, []int) {
+	return file_mom_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *TokenConExpiracion) GetUsername() string {
+	if x != nil {
+		return x.Username
+	}
+	return ""
+}
+
+func (x *TokenConExpiracion) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *TokenConExpiracion) GetExpiracion() string {
+	if x != nil {
+		return x.Expiracion
+	}
+	return ""
+}
+
 type Token struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
@@ -82,7 +142,7 @@ type Token struct {
 
 func (x *Token) Reset() {
 	*x = Token{}
-	mi := &file_mom_proto_msgTypes[1]
+	mi := &file_mom_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -94,7 +154,7 @@ func (x *Token) String() string {
 func (*Token) ProtoMessage() {}
 
 func (x *Token) ProtoReflect() protoreflect.Message {
-	mi := &file_mom_proto_msgTypes[1]
+	mi := &file_mom_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +167,7 @@ func (x *Token) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Token.ProtoReflect.Descriptor instead.
 func (*Token) Descriptor() ([]byte, []int) {
-	return file_mom_proto_rawDescGZIP(), []int{1}
+	return file_mom_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Token) GetToken() string {
@@ -127,7 +187,7 @@ type AccionConToken struct {
 
 func (x *AccionConToken) Reset() {
 	*x = AccionConToken{}
-	mi := &file_mom_proto_msgTypes[2]
+	mi := &file_mom_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -139,7 +199,7 @@ func (x *AccionConToken) String() string {
 func (*AccionConToken) ProtoMessage() {}
 
 func (x *AccionConToken) ProtoReflect() protoreflect.Message {
-	mi := &file_mom_proto_msgTypes[2]
+	mi := &file_mom_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -152,7 +212,7 @@ func (x *AccionConToken) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AccionConToken.ProtoReflect.Descriptor instead.
 func (*AccionConToken) Descriptor() ([]byte, []int) {
-	return file_mom_proto_rawDescGZIP(), []int{2}
+	return file_mom_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *AccionConToken) GetToken() string {
@@ -180,7 +240,7 @@ type MensajeConToken struct {
 
 func (x *MensajeConToken) Reset() {
 	*x = MensajeConToken{}
-	mi := &file_mom_proto_msgTypes[3]
+	mi := &file_mom_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -192,7 +252,7 @@ func (x *MensajeConToken) String() string {
 func (*MensajeConToken) ProtoMessage() {}
 
 func (x *MensajeConToken) ProtoReflect() protoreflect.Message {
-	mi := &file_mom_proto_msgTypes[3]
+	mi := &file_mom_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -205,7 +265,7 @@ func (x *MensajeConToken) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MensajeConToken.ProtoReflect.Descriptor instead.
 func (*MensajeConToken) Descriptor() ([]byte, []int) {
-	return file_mom_proto_rawDescGZIP(), []int{3}
+	return file_mom_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *MensajeConToken) GetToken() string {
@@ -240,7 +300,7 @@ type AutorizacionColaRequest struct {
 
 func (x *AutorizacionColaRequest) Reset() {
 	*x = AutorizacionColaRequest{}
-	mi := &file_mom_proto_msgTypes[4]
+	mi := &file_mom_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -252,7 +312,7 @@ func (x *AutorizacionColaRequest) String() string {
 func (*AutorizacionColaRequest) ProtoMessage() {}
 
 func (x *AutorizacionColaRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_mom_proto_msgTypes[4]
+	mi := &file_mom_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -265,7 +325,7 @@ func (x *AutorizacionColaRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AutorizacionColaRequest.ProtoReflect.Descriptor instead.
 func (*AutorizacionColaRequest) Descriptor() ([]byte, []int) {
-	return file_mom_proto_rawDescGZIP(), []int{4}
+	return file_mom_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *AutorizacionColaRequest) GetToken() string {
@@ -299,7 +359,7 @@ type RespuestaSimple struct {
 
 func (x *RespuestaSimple) Reset() {
 	*x = RespuestaSimple{}
-	mi := &file_mom_proto_msgTypes[5]
+	mi := &file_mom_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -311,7 +371,7 @@ func (x *RespuestaSimple) String() string {
 func (*RespuestaSimple) ProtoMessage() {}
 
 func (x *RespuestaSimple) ProtoReflect() protoreflect.Message {
-	mi := &file_mom_proto_msgTypes[5]
+	mi := &file_mom_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -324,7 +384,7 @@ func (x *RespuestaSimple) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RespuestaSimple.ProtoReflect.Descriptor instead.
 func (*RespuestaSimple) Descriptor() ([]byte, []int) {
-	return file_mom_proto_rawDescGZIP(), []int{5}
+	return file_mom_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *RespuestaSimple) GetExito() bool {
@@ -353,7 +413,7 @@ type MensajeTexto struct {
 
 func (x *MensajeTexto) Reset() {
 	*x = MensajeTexto{}
-	mi := &file_mom_proto_msgTypes[6]
+	mi := &file_mom_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -365,7 +425,7 @@ func (x *MensajeTexto) String() string {
 func (*MensajeTexto) ProtoMessage() {}
 
 func (x *MensajeTexto) ProtoReflect() protoreflect.Message {
-	mi := &file_mom_proto_msgTypes[6]
+	mi := &file_mom_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -378,7 +438,7 @@ func (x *MensajeTexto) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MensajeTexto.ProtoReflect.Descriptor instead.
 func (*MensajeTexto) Descriptor() ([]byte, []int) {
-	return file_mom_proto_rawDescGZIP(), []int{6}
+	return file_mom_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *MensajeTexto) GetContenido() string {
@@ -418,7 +478,7 @@ type ListaMensajes struct {
 
 func (x *ListaMensajes) Reset() {
 	*x = ListaMensajes{}
-	mi := &file_mom_proto_msgTypes[7]
+	mi := &file_mom_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -430,7 +490,7 @@ func (x *ListaMensajes) String() string {
 func (*ListaMensajes) ProtoMessage() {}
 
 func (x *ListaMensajes) ProtoReflect() protoreflect.Message {
-	mi := &file_mom_proto_msgTypes[7]
+	mi := &file_mom_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -443,7 +503,7 @@ func (x *ListaMensajes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListaMensajes.ProtoReflect.Descriptor instead.
 func (*ListaMensajes) Descriptor() ([]byte, []int) {
-	return file_mom_proto_rawDescGZIP(), []int{7}
+	return file_mom_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *ListaMensajes) GetMensajes() []*MensajeTexto {
@@ -462,7 +522,7 @@ type ListaNombres struct {
 
 func (x *ListaNombres) Reset() {
 	*x = ListaNombres{}
-	mi := &file_mom_proto_msgTypes[8]
+	mi := &file_mom_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -474,7 +534,7 @@ func (x *ListaNombres) String() string {
 func (*ListaNombres) ProtoMessage() {}
 
 func (x *ListaNombres) ProtoReflect() protoreflect.Message {
-	mi := &file_mom_proto_msgTypes[8]
+	mi := &file_mom_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -487,7 +547,7 @@ func (x *ListaNombres) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListaNombres.ProtoReflect.Descriptor instead.
 func (*ListaNombres) Descriptor() ([]byte, []int) {
-	return file_mom_proto_rawDescGZIP(), []int{8}
+	return file_mom_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListaNombres) GetNombres() []string {
@@ -504,7 +564,13 @@ const file_mom_proto_rawDesc = "" +
 	"\tmom.proto\x12\x03mom\"F\n" +
 	"\fCredenciales\x12\x1a\n" +
 	"\busername\x18\x01 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"\x1d\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"f\n" +
+	"\x12TokenConExpiracion\x12\x1a\n" +
+	"\busername\x18\x01 \x01(\tR\busername\x12\x14\n" +
+	"\x05token\x18\x02 \x01(\tR\x05token\x12\x1e\n" +
+	"\n" +
+	"expiracion\x18\x03 \x01(\tR\n" +
+	"expiracion\"\x1d\n" +
 	"\x05Token\x12\x14\n" +
 	"\x05token\x18\x01 \x01(\tR\x05token\">\n" +
 	"\x0eAccionConToken\x12\x14\n" +
@@ -529,12 +595,13 @@ const file_mom_proto_rawDesc = "" +
 	"\rListaMensajes\x12-\n" +
 	"\bmensajes\x18\x01 \x03(\v2\x11.mom.MensajeTextoR\bmensajes\"(\n" +
 	"\fListaNombres\x12\x18\n" +
-	"\anombres\x18\x01 \x03(\tR\anombres2\xd1\x06\n" +
+	"\anombres\x18\x01 \x03(\tR\anombres2\x97\a\n" +
 	"\n" +
 	"MomService\x12;\n" +
 	"\x10RegistrarUsuario\x12\x11.mom.Credenciales\x1a\x14.mom.RespuestaSimple\x122\n" +
 	"\x11AutenticarUsuario\x12\x11.mom.Credenciales\x1a\n" +
-	".mom.Token\x126\n" +
+	".mom.Token\x12D\n" +
+	"\x13GuardarTokenReplica\x12\x17.mom.TokenConExpiracion\x1a\x14.mom.RespuestaSimple\x126\n" +
 	"\tCrearCola\x12\x13.mom.AccionConToken\x1a\x14.mom.RespuestaSimple\x129\n" +
 	"\fEliminarCola\x12\x13.mom.AccionConToken\x1a\x14.mom.RespuestaSimple\x12J\n" +
 	"\x14AutorizarUsuarioCola\x12\x1c.mom.AutorizacionColaRequest\x1a\x14.mom.RespuestaSimple\x12?\n" +
@@ -562,50 +629,53 @@ func file_mom_proto_rawDescGZIP() []byte {
 	return file_mom_proto_rawDescData
 }
 
-var file_mom_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_mom_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_mom_proto_goTypes = []any{
 	(*Credenciales)(nil),            // 0: mom.Credenciales
-	(*Token)(nil),                   // 1: mom.Token
-	(*AccionConToken)(nil),          // 2: mom.AccionConToken
-	(*MensajeConToken)(nil),         // 3: mom.MensajeConToken
-	(*AutorizacionColaRequest)(nil), // 4: mom.AutorizacionColaRequest
-	(*RespuestaSimple)(nil),         // 5: mom.RespuestaSimple
-	(*MensajeTexto)(nil),            // 6: mom.MensajeTexto
-	(*ListaMensajes)(nil),           // 7: mom.ListaMensajes
-	(*ListaNombres)(nil),            // 8: mom.ListaNombres
+	(*TokenConExpiracion)(nil),      // 1: mom.TokenConExpiracion
+	(*Token)(nil),                   // 2: mom.Token
+	(*AccionConToken)(nil),          // 3: mom.AccionConToken
+	(*MensajeConToken)(nil),         // 4: mom.MensajeConToken
+	(*AutorizacionColaRequest)(nil), // 5: mom.AutorizacionColaRequest
+	(*RespuestaSimple)(nil),         // 6: mom.RespuestaSimple
+	(*MensajeTexto)(nil),            // 7: mom.MensajeTexto
+	(*ListaMensajes)(nil),           // 8: mom.ListaMensajes
+	(*ListaNombres)(nil),            // 9: mom.ListaNombres
 }
 var file_mom_proto_depIdxs = []int32{
-	6,  // 0: mom.ListaMensajes.mensajes:type_name -> mom.MensajeTexto
+	7,  // 0: mom.ListaMensajes.mensajes:type_name -> mom.MensajeTexto
 	0,  // 1: mom.MomService.RegistrarUsuario:input_type -> mom.Credenciales
 	0,  // 2: mom.MomService.AutenticarUsuario:input_type -> mom.Credenciales
-	2,  // 3: mom.MomService.CrearCola:input_type -> mom.AccionConToken
-	2,  // 4: mom.MomService.EliminarCola:input_type -> mom.AccionConToken
-	4,  // 5: mom.MomService.AutorizarUsuarioCola:input_type -> mom.AutorizacionColaRequest
-	3,  // 6: mom.MomService.EnviarMensajeCola:input_type -> mom.MensajeConToken
-	2,  // 7: mom.MomService.ConsumirMensajeCola:input_type -> mom.AccionConToken
-	1,  // 8: mom.MomService.ListarColas:input_type -> mom.Token
-	2,  // 9: mom.MomService.CrearTopico:input_type -> mom.AccionConToken
-	2,  // 10: mom.MomService.EliminarTopico:input_type -> mom.AccionConToken
-	2,  // 11: mom.MomService.SuscribirseTopico:input_type -> mom.AccionConToken
-	3,  // 12: mom.MomService.PublicarEnTopico:input_type -> mom.MensajeConToken
-	2,  // 13: mom.MomService.ConsumirDesdeTopico:input_type -> mom.AccionConToken
-	1,  // 14: mom.MomService.ListarTopicos:input_type -> mom.Token
-	5,  // 15: mom.MomService.RegistrarUsuario:output_type -> mom.RespuestaSimple
-	1,  // 16: mom.MomService.AutenticarUsuario:output_type -> mom.Token
-	5,  // 17: mom.MomService.CrearCola:output_type -> mom.RespuestaSimple
-	5,  // 18: mom.MomService.EliminarCola:output_type -> mom.RespuestaSimple
-	5,  // 19: mom.MomService.AutorizarUsuarioCola:output_type -> mom.RespuestaSimple
-	5,  // 20: mom.MomService.EnviarMensajeCola:output_type -> mom.RespuestaSimple
-	6,  // 21: mom.MomService.ConsumirMensajeCola:output_type -> mom.MensajeTexto
-	8,  // 22: mom.MomService.ListarColas:output_type -> mom.ListaNombres
-	5,  // 23: mom.MomService.CrearTopico:output_type -> mom.RespuestaSimple
-	5,  // 24: mom.MomService.EliminarTopico:output_type -> mom.RespuestaSimple
-	5,  // 25: mom.MomService.SuscribirseTopico:output_type -> mom.RespuestaSimple
-	5,  // 26: mom.MomService.PublicarEnTopico:output_type -> mom.RespuestaSimple
-	7,  // 27: mom.MomService.ConsumirDesdeTopico:output_type -> mom.ListaMensajes
-	8,  // 28: mom.MomService.ListarTopicos:output_type -> mom.ListaNombres
-	15, // [15:29] is the sub-list for method output_type
-	1,  // [1:15] is the sub-list for method input_type
+	1,  // 3: mom.MomService.GuardarTokenReplica:input_type -> mom.TokenConExpiracion
+	3,  // 4: mom.MomService.CrearCola:input_type -> mom.AccionConToken
+	3,  // 5: mom.MomService.EliminarCola:input_type -> mom.AccionConToken
+	5,  // 6: mom.MomService.AutorizarUsuarioCola:input_type -> mom.AutorizacionColaRequest
+	4,  // 7: mom.MomService.EnviarMensajeCola:input_type -> mom.MensajeConToken
+	3,  // 8: mom.MomService.ConsumirMensajeCola:input_type -> mom.AccionConToken
+	2,  // 9: mom.MomService.ListarColas:input_type -> mom.Token
+	3,  // 10: mom.MomService.CrearTopico:input_type -> mom.AccionConToken
+	3,  // 11: mom.MomService.EliminarTopico:input_type -> mom.AccionConToken
+	3,  // 12: mom.MomService.SuscribirseTopico:input_type -> mom.AccionConToken
+	4,  // 13: mom.MomService.PublicarEnTopico:input_type -> mom.MensajeConToken
+	3,  // 14: mom.MomService.ConsumirDesdeTopico:input_type -> mom.AccionConToken
+	2,  // 15: mom.MomService.ListarTopicos:input_type -> mom.Token
+	6,  // 16: mom.MomService.RegistrarUsuario:output_type -> mom.RespuestaSimple
+	2,  // 17: mom.MomService.AutenticarUsuario:output_type -> mom.Token
+	6,  // 18: mom.MomService.GuardarTokenReplica:output_type -> mom.RespuestaSimple
+	6,  // 19: mom.MomService.CrearCola:output_type -> mom.RespuestaSimple
+	6,  // 20: mom.MomService.EliminarCola:output_type -> mom.RespuestaSimple
+	6,  // 21: mom.MomService.AutorizarUsuarioCola:output_type -> mom.RespuestaSimple
+	6,  // 22: mom.MomService.EnviarMensajeCola:output_type -> mom.RespuestaSimple
+	7,  // 23: mom.MomService.ConsumirMensajeCola:output_type -> mom.MensajeTexto
+	9,  // 24: mom.MomService.ListarColas:output_type -> mom.ListaNombres
+	6,  // 25: mom.MomService.CrearTopico:output_type -> mom.RespuestaSimple
+	6,  // 26: mom.MomService.EliminarTopico:output_type -> mom.RespuestaSimple
+	6,  // 27: mom.MomService.SuscribirseTopico:output_type -> mom.RespuestaSimple
+	6,  // 28: mom.MomService.PublicarEnTopico:output_type -> mom.RespuestaSimple
+	8,  // 29: mom.MomService.ConsumirDesdeTopico:output_type -> mom.ListaMensajes
+	9,  // 30: mom.MomService.ListarTopicos:output_type -> mom.ListaNombres
+	16, // [16:31] is the sub-list for method output_type
+	1,  // [1:16] is the sub-list for method input_type
 	1,  // [1:1] is the sub-list for extension type_name
 	1,  // [1:1] is the sub-list for extension extendee
 	0,  // [0:1] is the sub-list for field type_name
@@ -622,7 +692,7 @@ func file_mom_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_mom_proto_rawDesc), len(file_mom_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

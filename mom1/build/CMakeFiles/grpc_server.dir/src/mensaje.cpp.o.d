@@ -1,7 +1,7 @@
 CMakeFiles/grpc_server.dir/src/mensaje.cpp.o: \
- /home/sebastian/projects/mom_core_v2_node1/src/mensaje.cpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/src/mensaje.cpp \
  /usr/include/stdc-predef.h \
- /home/sebastian/projects/mom_core_v2_node1/include/mensaje.hpp \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom1/include/mensaje.hpp \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \

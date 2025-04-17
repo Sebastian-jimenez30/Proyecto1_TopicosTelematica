@@ -15,7 +15,7 @@ private:
     Broker broker;
 
 public:
-    MomServiceImpl() : broker("../data/mom2.db") {}
+    MomServiceImpl() : broker("../data/mom1.db") {}
 
     Status RegistrarUsuario(ServerContext*, const mom::Credenciales* req, mom::RespuestaSimple* res) override {
         bool ok = broker.registrarUsuario(req->username(), req->password());
@@ -28,6 +28,13 @@ public:
         std::string token;
         bool ok = broker.autenticarUsuario(req->username(), req->password(), token);
         if (ok) res->set_token(token);
+        return Status::OK;
+    }
+
+    Status GuardarTokenReplica(ServerContext*, const mom::TokenConExpiracion* req, mom::RespuestaSimple* res) override {
+        bool ok = broker.guardarTokenReplica(req->username(), req->token(), req->expiracion());
+        res->set_exito(ok);
+        res->set_mensaje(ok ? "Token replicado" : "Error");
         return Status::OK;
     }
 

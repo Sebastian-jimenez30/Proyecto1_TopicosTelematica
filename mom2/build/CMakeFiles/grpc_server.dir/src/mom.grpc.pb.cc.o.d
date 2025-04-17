@@ -1,7 +1,7 @@
 CMakeFiles/grpc_server.dir/src/mom.grpc.pb.cc.o: \
- /home/sebastian/projects/mom_core_v2_node2/src/mom.grpc.pb.cc \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/mom.grpc.pb.cc \
  /usr/include/stdc-predef.h \
- /home/sebastian/projects/mom_core_v2_node2/src/mom.pb.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/mom.pb.h \
  /usr/include/c++/13/limits \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -262,7 +262,7 @@ CMakeFiles/grpc_server.dir/src/mom.grpc.pb.cc.o: \
  /usr/local/include/google/protobuf/map_type_handler.h \
  /usr/local/include/google/protobuf/extension_set.h \
  /usr/include/c++/13/cassert \
- /home/sebastian/projects/mom_core_v2_node2/src/mom.grpc.pb.h \
+ /home/sebastian/projects/Proyecto1_TopicosTelematica/mom2/src/mom.grpc.pb.h \
  /usr/local/include/grpcpp/generic/async_generic_service.h \
  /usr/local/include/grpc/support/port_platform.h \
  /usr/include/linux/version.h \
