@@ -15,7 +15,7 @@ private:
     Broker broker;
 
 public:
-    MomServiceImpl() : broker("../data/mom_node1.db") {}
+    MomServiceImpl() : broker("../data/mom3.db") {}
 
     Status RegistrarUsuario(ServerContext*, const mom::Credenciales* req, mom::RespuestaSimple* res) override {
         bool ok = broker.registrarUsuario(req->username(), req->password());
@@ -128,7 +128,7 @@ public:
 };
 
 void RunServer() {
-    std::string server_address("0.0.0.0:50051");
+    std::string server_address("0.0.0.0:50053");
     MomServiceImpl service;
 
     grpc::ServerBuilder builder;
