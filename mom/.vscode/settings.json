@@ -68,10 +68,7 @@
         "__split_buffer": "cpp",
         "__threading_support": "cpp",
         "__verbose_abort": "cpp",
-        "execution": "cpp",
-        "cstdarg": "cpp",
-        "numeric": "cpp",
-        "text_encoding": "cpp"
+        "execution": "cpp"
     },
     "cmake.sourceDirectory": "/home/sebastian/projects/Proyecto1_TopicosTelematica/mom1"
 }

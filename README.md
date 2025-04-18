@@ -111,9 +111,10 @@ La comunicación asincrónica y desacoplada entre componentes de software requie
 1. Iniciar 3 nodos MOM:
 
 ```bash
-./grpc_server  50051
-./grpc_server  50052
-./grpc_server  50053
+cd mom
+./run_dev.sh
+./run_dev.sh
+./run_dev.sh
 ```
 
 2. Ejecutar el API Gateway:
@@ -156,7 +157,7 @@ curl -X POST http://localhost:8080/login \
 ##  Autores
 
 - Sebastián Jimenez
-
+- Carlos Alberto Mazo Gil
 
 ---
 
