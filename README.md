@@ -110,10 +110,10 @@ La comunicación asincrónica y desacoplada entre componentes de software requie
 
 1. Iniciar 3 nodos MOM:
 
+En terminales distintas ejecutar los siguientes comando 1 veces por cada servidor mom
+
 ```bash
 cd mom
-./run_dev.sh
-./run_dev.sh
 ./run_dev.sh
 ```
 
