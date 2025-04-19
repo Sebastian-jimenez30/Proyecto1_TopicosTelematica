@@ -36,6 +36,13 @@ public:
         return Status::OK;
     }
 
+    Status GuardarTokenReplica(ServerContext*, const mom::TokenConExpiracion* req, mom::RespuestaSimple* res) override {
+        bool ok = broker.guardarTokenReplica(req->username(), req->token(), req->expiracion());
+        res->set_exito(ok);
+        res->set_mensaje(ok ? "Token replicado" : "Error");
+        return Status::OK;
+    }
+
     Status CrearCola(ServerContext*, const mom::AccionConToken* req, mom::RespuestaSimple* res) override {
         bool ok = broker.crearCola(req->nombre(), req->token());
         res->set_exito(ok);

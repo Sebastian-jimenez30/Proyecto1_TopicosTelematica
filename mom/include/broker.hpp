@@ -16,6 +16,7 @@ public:
     // Usuarios
     bool registrarUsuario(const std::string& username, const std::string& password);
     bool autenticarUsuario(const std::string& username, const std::string& password, std::string& token);
+    bool guardarTokenReplica(const std::string& username, const std::string& token, const std::string& expiracion);
     bool verificarToken(const std::string& token, std::string& username);
 
     // Colas

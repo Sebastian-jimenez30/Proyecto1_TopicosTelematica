@@ -114,7 +114,7 @@ En terminales distintas ejecutar los siguientes comando 1 veces por cada servido
 
 ```bash
 cd mom
-./run_dev.sh
+./run_dev.sh 0
 ```
 
 2. Ejecutar el API Gateway:
@@ -151,8 +151,6 @@ curl -X POST http://localhost:8080/login \
 ```
 
 ---
-
-
 
 ##  Autores
 

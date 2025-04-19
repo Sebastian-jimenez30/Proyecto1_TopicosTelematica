@@ -33,6 +33,10 @@ bool Broker::autenticarUsuario(const std::string& username, const std::string& p
     return false;
 }
 
+bool Broker::guardarTokenReplica(const std::string& username, const std::string& token, const std::string& expiracion) {
+    return persistencia.guardarToken(username, token, expiracion);
+}
+
 
 bool Broker::verificarToken(const std::string& token, std::string& username_out) {
     if (!Usuario::verificarToken(token, username_out)) return false;

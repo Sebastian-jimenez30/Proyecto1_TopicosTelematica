@@ -24,6 +24,7 @@ namespace mom {
 static const char* MomService_method_names[] = {
   "/mom.MomService/RegistrarUsuario",
   "/mom.MomService/AutenticarUsuario",
+  "/mom.MomService/GuardarTokenReplica",
   "/mom.MomService/CrearCola",
   "/mom.MomService/EliminarCola",
   "/mom.MomService/AutorizarUsuarioCola",
@@ -47,18 +48,19 @@ std::unique_ptr< MomService::Stub> MomService::NewStub(const std::shared_ptr< ::
 MomService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_RegistrarUsuario_(MomService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_AutenticarUsuario_(MomService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CrearCola_(MomService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EliminarCola_(MomService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_AutorizarUsuarioCola_(MomService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EnviarMensajeCola_(MomService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ConsumirMensajeCola_(MomService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ListarColas_(MomService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_CrearTopico_(MomService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_EliminarTopico_(MomService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_SuscribirseTopico_(MomService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_PublicarEnTopico_(MomService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ConsumirDesdeTopico_(MomService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ListarTopicos_(MomService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GuardarTokenReplica_(MomService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CrearCola_(MomService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EliminarCola_(MomService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_AutorizarUsuarioCola_(MomService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EnviarMensajeCola_(MomService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ConsumirMensajeCola_(MomService_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ListarColas_(MomService_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_CrearTopico_(MomService_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_EliminarTopico_(MomService_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SuscribirseTopico_(MomService_method_names[11], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_PublicarEnTopico_(MomService_method_names[12], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ConsumirDesdeTopico_(MomService_method_names[13], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ListarTopicos_(MomService_method_names[14], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status MomService::Stub::RegistrarUsuario(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::mom::RespuestaSimple* response) {
@@ -103,6 +105,29 @@ void MomService::Stub::async::AutenticarUsuario(::grpc::ClientContext* context, 
 ::grpc::ClientAsyncResponseReader< ::mom::Token>* MomService::Stub::AsyncAutenticarUsuarioRaw(::grpc::ClientContext* context, const ::mom::Credenciales& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncAutenticarUsuarioRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status MomService::Stub::GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::mom::RespuestaSimple* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::mom::TokenConExpiracion, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GuardarTokenReplica_, context, request, response);
+}
+
+void MomService::Stub::async::GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::mom::TokenConExpiracion, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GuardarTokenReplica_, context, request, response, std::move(f));
+}
+
+void MomService::Stub::async::GuardarTokenReplica(::grpc::ClientContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GuardarTokenReplica_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>* MomService::Stub::PrepareAsyncGuardarTokenReplicaRaw(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mom::RespuestaSimple, ::mom::TokenConExpiracion, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GuardarTokenReplica_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::mom::RespuestaSimple>* MomService::Stub::AsyncGuardarTokenReplicaRaw(::grpc::ClientContext* context, const ::mom::TokenConExpiracion& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGuardarTokenReplicaRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -407,12 +432,12 @@ MomService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MomService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::AccionConToken, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::TokenConExpiracion, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::mom::AccionConToken* req,
+             const ::mom::TokenConExpiracion* req,
              ::mom::RespuestaSimple* resp) {
-               return service->CrearCola(ctx, req, resp);
+               return service->GuardarTokenReplica(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MomService_method_names[3],
@@ -422,10 +447,20 @@ MomService::Service::Service() {
              ::grpc::ServerContext* ctx,
              const ::mom::AccionConToken* req,
              ::mom::RespuestaSimple* resp) {
-               return service->EliminarCola(ctx, req, resp);
+               return service->CrearCola(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MomService_method_names[4],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::AccionConToken, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](MomService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::mom::AccionConToken* req,
+             ::mom::RespuestaSimple* resp) {
+               return service->EliminarCola(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      MomService_method_names[5],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::AutorizacionColaRequest, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -435,7 +470,7 @@ MomService::Service::Service() {
                return service->AutorizarUsuarioCola(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[5],
+      MomService_method_names[6],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::MensajeConToken, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -445,7 +480,7 @@ MomService::Service::Service() {
                return service->EnviarMensajeCola(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[6],
+      MomService_method_names[7],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::AccionConToken, ::mom::MensajeTexto, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -455,7 +490,7 @@ MomService::Service::Service() {
                return service->ConsumirMensajeCola(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[7],
+      MomService_method_names[8],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::Token, ::mom::ListaNombres, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -465,7 +500,7 @@ MomService::Service::Service() {
                return service->ListarColas(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[8],
+      MomService_method_names[9],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::AccionConToken, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -475,7 +510,7 @@ MomService::Service::Service() {
                return service->CrearTopico(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[9],
+      MomService_method_names[10],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::AccionConToken, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -485,7 +520,7 @@ MomService::Service::Service() {
                return service->EliminarTopico(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[10],
+      MomService_method_names[11],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::AccionConToken, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -495,7 +530,7 @@ MomService::Service::Service() {
                return service->SuscribirseTopico(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[11],
+      MomService_method_names[12],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::MensajeConToken, ::mom::RespuestaSimple, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -505,7 +540,7 @@ MomService::Service::Service() {
                return service->PublicarEnTopico(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[12],
+      MomService_method_names[13],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::AccionConToken, ::mom::ListaMensajes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -515,7 +550,7 @@ MomService::Service::Service() {
                return service->ConsumirDesdeTopico(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MomService_method_names[13],
+      MomService_method_names[14],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MomService::Service, ::mom::Token, ::mom::ListaNombres, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MomService::Service* service,
@@ -537,6 +572,13 @@ MomService::Service::~Service() {
 }
 
 ::grpc::Status MomService::Service::AutenticarUsuario(::grpc::ServerContext* context, const ::mom::Credenciales* request, ::mom::Token* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status MomService::Service::GuardarTokenReplica(::grpc::ServerContext* context, const ::mom::TokenConExpiracion* request, ::mom::RespuestaSimple* response) {
   (void) context;
   (void) request;
   (void) response;
