@@ -20,7 +20,7 @@ private:
     Broker broker;
 
 public:
-    MomServiceImpl() : broker("/home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/data/mom.db") {} // Solucionar Problema de ruta relativa usar por el momento usar ruta absoluta
+    MomServiceImpl(int port) : broker("/home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/data/mom" + std::to_string(port) + ".db") {} // Solucionar Problema de ruta relativa usar por el momento usar ruta absoluta
 
     Status RegistrarUsuario(ServerContext*, const mom::Credenciales* req, mom::RespuestaSimple* res) override {
         bool ok = broker.registrarUsuario(req->username(), req->password());
@@ -134,7 +134,7 @@ public:
 
 void RunServer(int port) {
     std::string server_address("0.0.0.0:" + std::to_string(port));
-    MomServiceImpl service;
+    MomServiceImpl service(port);
 
     grpc::ServerBuilder builder;
     builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
@@ -163,6 +163,7 @@ int main() {
 
     while (verificarPuerto(port)) {
         port = port + 1;
+
     }
 
     RunServer(port);
