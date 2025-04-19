@@ -121,7 +121,7 @@ cd mom
 
 ```bash
 cd mom_gateway
-go run main.go
+go run main.go routes.go
 ```
 
 3. Acceder vía Postman o curl a:
