@@ -205,6 +205,7 @@ func ConsumirColaHandler(cl *cluster.Cluster) gin.HandlerFunc {
 
 		principal := cl.NodoResponsable(nombreCola)
 		replica := cl.NodoSiguiente(principal)
+		replica2 := cl.NodoSiguiente(replica)
 
 		req := &pb.AccionConToken{Token: token, Nombre: nombreCola}
 
@@ -217,6 +218,7 @@ func ConsumirColaHandler(cl *cluster.Cluster) gin.HandlerFunc {
 			ctxFallback, cancelFallback := context.WithTimeout(context.Background(), 2*time.Second)
 			defer cancelFallback()
 			res, err = replica.Cliente.ConsumirMensajeCola(ctxFallback, req)
+			res, err = replica2.Cliente.ConsumirMensajeCola(ctxFallback, req)
 		}
 
 		if err != nil {

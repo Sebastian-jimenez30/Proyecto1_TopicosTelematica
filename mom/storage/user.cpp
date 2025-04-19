@@ -27,7 +27,7 @@ bool Usuario::verificarToken(const std::string& token, std::string& username_out
         auto decoded = jwt::decode(token);
         auto verifier = jwt::verify()
             .allow_algorithm(jwt::algorithm::hs256{SECRET})
-            .with_issuer("mom_core_v2");
+            .with_issuer("mom");
 
         verifier.verify(decoded);
 

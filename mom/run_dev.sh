@@ -31,7 +31,7 @@ elif [ "$1" == "1" ]; then
         $STORAGE_DIR/user.cpp $STORAGE_DIR/queue.cpp $STORAGE_DIR/topic.cpp \
         $INCLUDE_DIR/mom.pb.cc $INCLUDE_DIR/mom.grpc.pb.cc \
         -o $BUILD_DIR/$OUTPUT_BINARY \
-        -lgrpc++ -lgrpc -lprotobuf -lpthread -labsl_synchronization -labsl_time -absl_strings -lgpr -lsqlite3 -lcrypto -lssl
+        -lgrpc++ -lgrpc -lprotobuf -lpthread -labsl_synchronization -labsl_base -labsl_time -labsl_strings -lgpr -lsqlite3 -lcrypto -lssl
 
     if [ $? -eq 0 ]; then
         echo "Compilación exitosa. Ejecutando el servidor..."
