@@ -71,7 +71,15 @@
         "execution": "cpp",
         "cstdarg": "cpp",
         "numeric": "cpp",
-        "text_encoding": "cpp"
+        "text_encoding": "cpp",
+        "any": "cpp",
+        "complex": "cpp",
+        "forward_list": "cpp",
+        "source_location": "cpp",
+        "ranges": "cpp",
+        "shared_mutex": "cpp",
+        "typeindex": "cpp",
+        "valarray": "cpp"
     },
     "cmake.sourceDirectory": "/home/sebastian/projects/Proyecto1_TopicosTelematica/mom1"
 }

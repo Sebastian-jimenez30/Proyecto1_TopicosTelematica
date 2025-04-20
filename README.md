@@ -108,7 +108,7 @@ La comunicación asincrónica y desacoplada entre componentes de software requie
 
 ### Ejecución
 
-1. Iniciar 3 nodos MOM:
+#### 1. Iniciar 3 nodos MOM:
 
 En terminales distintas ejecutar los siguientes comando 1 veces por cada servidor mom
 
@@ -116,15 +116,57 @@ En terminales distintas ejecutar los siguientes comando 1 veces por cada servido
 cd mom
 ./run_dev.sh 0
 ```
+Debe esperar a ver la dirección proporcionada por el servidor, por ejemplo:
 
-2. Ejecutar el API Gateway:
+```bash
+Servidor MOM escuchando en 192.168.1.14:50051
+```
+
+#### 2. Ejecutar el API Gateway:
 
 ```bash
 cd mom_gateway
-go run main.go routes.go
+go run . $dirMom1 $dirMom2 $dirMom3
 ```
 
-3. Acceder vía Postman o curl a:
+ejemplo
+
+```bash
+cd mom_gateway
+go run . 192.168.1.14:50051 192.168.1.14:50052 192.168.1.14:50051
+```
+
+#### 3.1. Acceder Via Cliente
+
+```bash
+cd client
+./client.py
+```
+El ejecutable le mostrará
+
+```bash
+=== Menú Principal ===
+1. Registrar usuario
+2. Iniciar sesión
+3. Crear cola
+4. Eliminar cola
+5. Autorizar usuario en cola
+6. Enviar mensaje a cola
+7. Consumir mensaje de cola
+8. Listar colas
+9. Crear tópico
+10. Eliminar tópico
+11. Suscribirse a tópico
+12. Publicar mensaje en tópico
+13. Consumir mensajes de tópico
+14. Listar tópicos
+15. Salir
+Selecciona una opción: 
+```
+
+Aquí podra operar de una manera sencilla las peticiones
+
+#### 3.2. Acceder vía Postman o curl a:
 
 ```
 http://localhost:8080

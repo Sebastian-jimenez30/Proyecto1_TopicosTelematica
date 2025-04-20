@@ -25,11 +25,11 @@ type Cluster struct {
 }
 
 // Crea un nuevo clúster conectándose a los tres MOMs
-func NuevoCluster() *Cluster {
+func NuevoCluster(mom1 string, mom2 string, mom3 string) *Cluster {
 	endpoints := []string{
-		"0.0.0.0:50051", // mom1
-		"0.0.0.0:50052", // mom2
-		"0.0.0.0:50053", // mom3
+		mom1,
+		mom2,
+		mom3,
 	}
 
 	var nodos []Nodo
