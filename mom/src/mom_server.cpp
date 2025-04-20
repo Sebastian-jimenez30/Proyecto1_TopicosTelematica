@@ -21,7 +21,8 @@ private:
     Broker broker;
 
 public:
-    MomServiceImpl(int port) : broker("/home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/data/mom" + std::to_string(port) + ".db") {} // Solucionar Problema de ruta relativa usar por el momento usar ruta absoluta
+
+    MomServiceImpl(int port) : broker("/home/ubuntu/Proyecto1_TopicosTelematica/mom/data/mom" + std::to_string(port) + ".db") {}
 
     Status RegistrarUsuario(ServerContext*, const mom::Credenciales* req, mom::RespuestaSimple* res) override {
         bool ok = broker.registrarUsuario(req->username(), req->password());
