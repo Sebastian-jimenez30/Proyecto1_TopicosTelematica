@@ -5,6 +5,7 @@
 #include "mom.grpc.pb.h"
 #include "broker.hpp"
 
+#include <ifaddrs.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -140,7 +141,24 @@ public:
 };
 
 void RunServer(int port) {
-    std::string server_address("0.0.0.0:" + std::to_string(port));
+    std::string local_ip = "0.0.0.0"; 
+    struct ifaddrs* ifaddr;
+    if (getifaddrs(&ifaddr) == 0) {
+        for (struct ifaddrs* ifa = ifaddr; ifa != nullptr; ifa = ifa->ifa_next) {
+            if (ifa->ifa_addr && ifa->ifa_addr->sa_family == AF_INET) {
+                char ip[INET_ADDRSTRLEN];
+                void* addr = &((struct sockaddr_in*)ifa->ifa_addr)->sin_addr;
+                inet_ntop(AF_INET, addr, ip, INET_ADDRSTRLEN);
+                if (std::string(ifa->ifa_name) != "lo") { 
+                    local_ip = ip;
+                    break;
+                }
+            }
+        }
+        freeifaddrs(ifaddr);
+    }
+
+    std::string server_address(local_ip + ":" + std::to_string(port));
     MomServiceImpl service(port);
 
     grpc::ServerBuilder builder;
@@ -165,14 +183,13 @@ bool verificarPuerto(int port) {
     return inUse;
 }
 
-int main() {
+int main(int argc, char** argv) {
     int port = 50051;
 
     while (verificarPuerto(port)) {
         port = port + 1;
 
     }
-
     RunServer(port);
     return 0;
 }
