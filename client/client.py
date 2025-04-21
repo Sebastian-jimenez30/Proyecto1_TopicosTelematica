@@ -2,11 +2,16 @@
 
 import requests
 import json
+import getpass
+from colorama import Fore, Style, init
 
-BASE_URL = "http://localhost:8080"
+# Inicializar colorama
+init(autoreset=True)
+
+BASE_URL = "http://192.168.1.60:8080"
 
 def menu():
-    print("\n=== Menú Principal ===")
+    print(Fore.CYAN + "\n=== Menú Principal ===")
     print("1. Registrar usuario")
     print("2. Iniciar sesión")
     print("3. Crear cola")
@@ -22,28 +27,34 @@ def menu():
     print("13. Consumir mensajes de tópico")
     print("14. Listar tópicos")
     print("15. Salir")
-    return input("Selecciona una opción: ")
+    return input(Fore.GREEN + "Selecciona una opción: ")
 
 def registrar_usuario():
+    print(Fore.CYAN + "\n=== Registrar Usuario ===")
     username = input("Nombre de usuario: ")
-    password = input("Contraseña: ")
+    password = getpass.getpass("Contraseña: ")
     data = {"username": username, "password": password}
     response = requests.post(f"{BASE_URL}/register", json=data)
     print_response(response)
 
 def iniciar_sesion():
     global token
+    print(Fore.CYAN + "\n=== Iniciar Sesión ===")
     username = input("Nombre de usuario: ")
-    password = input("Contraseña: ")
+    password = getpass.getpass("Contraseña: ")
     data = {"username": username, "password": password}
-    response = requests.post(f"{BASE_URL}/login", json=data)
-    if response.status_code == 200:
-        token = response.json().get("token")
-        print("Inicio de sesión exitoso. Token guardado.")
-    else:
-        print_response(response)
+    try:
+        response = requests.post(f"{BASE_URL}/login", json=data)
+        if response.status_code == 200:
+            token = response.json().get("token")
+            print(Fore.GREEN + "Inicio de sesión exitoso. Token guardado.")
+        else:
+            print_response(response)
+    except requests.exceptions.ConnectionError:
+        print(Fore.RED + "Error: No se pudo conectar al servidor. Verifica que esté en ejecución.")
 
 def crear_cola():
+    print(Fore.CYAN + "\n=== Crear Cola ===")
     nombre = input("Nombre de la cola: ")
     headers = {"Authorization": f"Bearer {token}"}
     data = {"nombre": nombre}
@@ -51,12 +62,14 @@ def crear_cola():
     print_response(response)
 
 def eliminar_cola():
+    print(Fore.CYAN + "\n=== Eliminar Cola ===")
     nombre = input("Nombre de la cola a eliminar: ")
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.delete(f"{BASE_URL}/colas/{nombre}", headers=headers)
     print_response(response)
 
 def autorizar_usuario():
+    print(Fore.CYAN + "\n=== Autorizar Usuario en Cola ===")
     nombre = input("Nombre de la cola: ")
     usuario = input("Usuario a autorizar: ")
     headers = {"Authorization": f"Bearer {token}"}
@@ -65,6 +78,7 @@ def autorizar_usuario():
     print_response(response)
 
 def enviar_mensaje():
+    print(Fore.CYAN + "\n=== Enviar Mensaje a Cola ===")
     nombre = input("Nombre de la cola: ")
     contenido = input("Contenido del mensaje: ")
     headers = {"Authorization": f"Bearer {token}"}
@@ -73,17 +87,20 @@ def enviar_mensaje():
     print_response(response)
 
 def consumir_mensaje():
+    print(Fore.CYAN + "\n=== Consumir Mensaje de Cola ===")
     nombre = input("Nombre de la cola: ")
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.get(f"{BASE_URL}/colas/{nombre}/consumir", headers=headers)
     print_response(response)
 
 def listar_colas():
+    print(Fore.CYAN + "\n=== Listar Colas ===")
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.get(f"{BASE_URL}/colas", headers=headers)
     print_response(response)
 
 def crear_topico():
+    print(Fore.CYAN + "\n=== Crear Tópico ===")
     nombre = input("Nombre del tópico: ")
     headers = {"Authorization": f"Bearer {token}"}
     data = {"nombre": nombre}
@@ -91,12 +108,14 @@ def crear_topico():
     print_response(response)
 
 def eliminar_topico():
+    print(Fore.CYAN + "\n=== Eliminar Tópico ===")
     nombre = input("Nombre del tópico a eliminar: ")
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.delete(f"{BASE_URL}/topicos/{nombre}", headers=headers)
     print_response(response)
 
 def suscribirse_topico():
+    print(Fore.CYAN + "\n=== Suscribirse a Tópico ===")
     nombre = input("Nombre del tópico: ")
     headers = {"Authorization": f"Bearer {token}"}
     data = {"nombre": nombre}
@@ -104,6 +123,7 @@ def suscribirse_topico():
     print_response(response)
 
 def publicar_topico():
+    print(Fore.CYAN + "\n=== Publicar Mensaje en Tópico ===")
     nombre = input("Nombre del tópico: ")
     contenido = input("Contenido del mensaje: ")
     headers = {"Authorization": f"Bearer {token}"}
@@ -112,22 +132,24 @@ def publicar_topico():
     print_response(response)
 
 def consumir_topico():
+    print(Fore.CYAN + "\n=== Consumir Mensajes de Tópico ===")
     nombre = input("Nombre del tópico: ")
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.get(f"{BASE_URL}/topicos/{nombre}/consumir", headers=headers)
     print_response(response)
 
 def listar_topicos():
+    print(Fore.CYAN + "\n=== Listar Tópicos ===")
     headers = {"Authorization": f"Bearer {token}"}
     response = requests.get(f"{BASE_URL}/topicos", headers=headers)
     print_response(response)
 
 def print_response(response):
     try:
-        print("\nRespuesta del servidor:")
+        print(Fore.GREEN + "\nRespuesta del servidor:")
         print(json.dumps(response.json(), indent=4))
     except json.JSONDecodeError:
-        print(response.text)
+        print(Fore.RED + response.text)
 
 if __name__ == "__main__":
     token = None
@@ -141,64 +163,64 @@ if __name__ == "__main__":
             if token:
                 crear_cola()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "4":
             if token:
                 eliminar_cola()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "5":
             if token:
                 autorizar_usuario()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "6":
             if token:
                 enviar_mensaje()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "7":
             if token:
                 consumir_mensaje()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "8":
             if token:
                 listar_colas()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "9":
             if token:
                 crear_topico()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "10":
             if token:
                 eliminar_topico()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "11":
             if token:
                 suscribirse_topico()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "12":
             if token:
                 publicar_topico()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "13":
             if token:
                 consumir_topico()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "14":
             if token:
                 listar_topicos()
             else:
-                print("Por favor, inicia sesión primero.")
+                print(Fore.RED + "Por favor, inicia sesión primero.")
         elif opcion == "15":
-            print("Saliendo del cliente...")
+            print(Fore.YELLOW + "Saliendo del cliente...")
             break
         else:
-            print("Opción no válida. Intenta de nuevo.")
+            print(Fore.RED + "Opción no válida. Intenta de nuevo.")

@@ -3551,7 +3551,6 @@ mom_server: /lib/i386-linux-gnu/libzstd.so.1 \
   CMakeFiles/mom_server.dir/include/mom.pb.cc.o \
   CMakeFiles/mom_server.dir/src/broker.cpp.o \
   CMakeFiles/mom_server.dir/src/mom_server.cpp.o \
-  CMakeFiles/mom_server.dir/src/server.cpp.o \
   CMakeFiles/mom_server.dir/storage/message.cpp.o \
   CMakeFiles/mom_server.dir/storage/persistence.cpp.o \
   CMakeFiles/mom_server.dir/storage/queue.cpp.o \
@@ -4276,8 +4275,6 @@ CMakeFiles/mom_server.dir/include/mom.pb.cc.o:
 /usr/include/c++/14/bits/hash_bytes.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
-
-CMakeFiles/mom_server.dir/src/server.cpp.o:
 
 /usr/include/absl/base/internal/throw_delegate.h:
 

@@ -3561,7 +3561,6 @@ mom_server
  /home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/build/CMakeFiles/mom_server.dir/include/mom.pb.cc.o
  /home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/build/CMakeFiles/mom_server.dir/src/broker.cpp.o
  /home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/build/CMakeFiles/mom_server.dir/src/mom_server.cpp.o
- /home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/build/CMakeFiles/mom_server.dir/src/server.cpp.o
  /home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/build/CMakeFiles/mom_server.dir/storage/message.cpp.o
  /home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/build/CMakeFiles/mom_server.dir/storage/persistence.cpp.o
  /home/carlosm/Documentos/Projects/Proyecto1_TopicosTelematica/mom/build/CMakeFiles/mom_server.dir/storage/queue.cpp.o
