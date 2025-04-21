@@ -198,6 +198,7 @@ curl -X POST http://localhost:8080/login \
 
 - Sebastián Jimenez
 - Carlos Alberto Mazo Gil
+- Juan Jose Restrepo Hernandez
 
 ---
 
